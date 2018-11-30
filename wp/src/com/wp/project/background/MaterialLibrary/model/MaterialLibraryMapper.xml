@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="materialLibrarySpace">
+	<sql id="Base_Column_List">
+		IT_ID, TITLE, AUTHOR,
+		DESCRIPTION, PIC_ID, PIC_URL, PIC_URL_WX, CREATE_TIME,MUSIC_URL,
+		HQMUSIC_URL,MEDIA_ID,THUMB_MEDIA_ID,CONTENT,WX_CONTENT,
+		SOURCE_URL_TYPE,SOURCE_URL,NO_ADV,IS_LOCK,
+		IT_TYPE, PUBLISH, PUBLISH_URL,
+		IT_GROUP_ID,GZH_ID,IT_ORDER
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		*
+		FROM WX_IT
+		WHERE IT_ID = #{IT_ID}
+	</select>
+	<select id="getMediaId" resultType="string" parameterType="string">
+		SELECT
+		MEDIA_ID
+		FROM WX_IT
+		WHERE IT_ID = #{IT_ID}
+	</select>
+	<select id="queryChiildIT" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_IT
+		WHERE IT_TYPE = '2'
+		AND IT_GROUP_ID = #{IT_GROUP_ID}
+		ORDER BY IT_ORDER
+	</select>
+	<select id="queryITByGroupID" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_IT
+		WHERE
+		IT_GROUP_ID = #{IT_GROUP_ID}
+		ORDER BY IT_ORDER
+	</select>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_IT
+		WHERE IT_GROUP_ID = #{IT_GROUP_ID}
+		ORDER BY IT_ORDER
+	</select>
+
+	<select id="getGroupIdByIT_ID" resultType="string"
+		parameterType="string">
+		SELECT
+		IT_GROUP_ID
+		FROM WX_IT
+		WHERE IT_ID = #{IT_ID}
+	</select>
+
+	<select id="queryPublishIT" resultType="map" parameterType="map">
+		SELECT
+		IT_ID,TITLE,PIC_MEDIA_ID,AUTHOR,DESCRIPTION,SHOW_COVER_PIC,WX_CONTENT,SOURCE_URL,IT_ORDER
+		FROM WX_IT
+		WHERE IT_GROUP_ID = #{IT_GROUP_ID}
+		ORDER BY IT_ORDER
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		T.IT_ID,T.TITLE,T.PIC_ID,T.PIC_URL,T.AUTHOR,T.CREATE_TIME, T.IT_GROUP_ID,T.PUBLISH,T.MEDIA_ID,C.IT_COUNT
+		FROM
+		(SELECT
+		IT_ID,TITLE,PIC_ID,PIC_URL,AUTHOR,CREATE_TIME,IT_GROUP_ID,PUBLISH,MEDIA_ID
+		FROM WX_IT
+		WHERE IT_TYPE = '1'
+		AND GZH_ID = #{t.GZH_ID}
+		<if test="t.TITLE != null" >
+      	AND TITLE LIKE concat('%', #{t.TITLE}, '%')
+    	</if>
+		)T
+		INNER JOIN
+		(SELECT IT_GROUP_ID ,COUNT(*) AS IT_COUNT FROM WX_IT
+		WHERE GZH_ID = #{t.GZH_ID}
+
+		GROUP BY IT_GROUP_ID)C
+		ON
+		T.IT_GROUP_ID = C.IT_GROUP_ID
+		ORDER BY T.CREATE_TIME DESC
+	</select>
+	<delete id="deleteById" parameterType="string">
+		DELETE FROM WX_IT
+		WHERE IT_ID = #{IT_ID}
+	</delete>
+	<delete id="deleteByGroupId" parameterType="string">
+		DELETE FROM WX_IT
+		WHERE IT_GROUP_ID = #{IT_GROUP_ID}
+	</delete>
+	<!-- <insert id="mainInsert" parameterType="map" > INSERT INTO WX_IT (IT_ID, 
+		TITLE, AUTHOR, DESCRIPTION, PIC_URL, CREATE_TIME,MUSIC_URL, HQMUSIC_URL,MEDIA_ID,THUMB_MEDIA_ID,CONTENT,WX_CONTENT, 
+		SOURCE_URL_TYPE,SOURCE_URL,NO_ADV,IS_LOCK, IT_TYPE, IT_GROUP_ID,GZH_ID) VALUES 
+		(#{IT_ID}, #{TITLE}, #{AUTHOR}, #{DESCRIPTION}, #{PIC_URL}, #{CREATE_TIME},#{MUSIC_URL}, 
+		#{HQMUSIC_URL},#{MEDIA_ID},#{THUMB_MEDIA_ID},#{CONTENT},#{WX_CONTENT}, #{SOURCE_URL_TYPE},#{SOURCE_URL},#{NO_ADV},#{IS_LOCK}, 
+		#{IT_TYPE}, #{IT_GROUP_ID},#{GZH_ID}) </insert> -->
+	<insert id="mainInsert" parameterType="map">
+		INSERT INTO WX_IT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="IT_ID != null">
+				IT_ID,
+			</if>
+			<if test="TITLE != null">
+				TITLE,
+			</if>
+			<if test="AUTHOR != null">
+				AUTHOR,
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL_WX != null">
+				PIC_URL_WX,
+			</if>
+			<if test="SHOW_COVER_PIC != null">
+				SHOW_COVER_PIC,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="MUSIC_URL != null">
+				MUSIC_URL,
+			</if>
+			<if test="HQMUSIC_URL != null">
+				HQMUSIC_URL,
+			</if>
+			<if test="MEDIA_ID != null">
+				MEDIA_ID,
+			</if>
+			<if test="THUMB_MEDIA_ID != null">
+				THUMB_MEDIA_ID,
+			</if>
+			<if test="CONTENT != null">
+				CONTENT,
+			</if>
+			<if test="WX_CONTENT != null">
+				WX_CONTENT,
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				PIC_MEDIA_ID,
+			</if>
+			<if test="SOURCE_URL_TYPE != null">
+				SOURCE_URL_TYPE,
+			</if>
+			<if test="SOURCE_URL != null">
+				SOURCE_URL,
+			</if>
+			<if test="NO_ADV != null">
+				NO_ADV,
+			</if>
+			<if test="IS_LOCK != null">
+				IS_LOCK,
+			</if>
+			<if test="IT_TYPE != null">
+				IT_TYPE,
+			</if>
+			<if test="IT_GROUP_ID != null">
+				IT_GROUP_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="IT_ORDER != null">
+				IT_ORDER,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="IT_ID != null">
+				#{IT_ID},
+			</if>
+			<if test="TITLE != null">
+				#{TITLE},
+			</if>
+			<if test="AUTHOR != null">
+				#{AUTHOR},
+			</if>
+			<if test="DESCRIPTION != null">
+				#{DESCRIPTION},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL_WX != null">
+				#{PIC_URL_WX},
+			</if>
+			<if test="SHOW_COVER_PIC != null">
+				#{SHOW_COVER_PIC},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="MUSIC_URL != null">
+				#{MUSIC_URL},
+			</if>
+			<if test="HQMUSIC_URL != null">
+				#{HQMUSIC_URL},
+			</if>
+			<if test="MEDIA_ID != null">
+				#{MEDIA_ID},
+			</if>
+			<if test="THUMB_MEDIA_ID != null">
+				#{THUMB_MEDIA_ID},
+			</if>
+			<if test="CONTENT != null">
+				#{CONTENT},
+			</if>
+			<if test="WX_CONTENT != null">
+				#{WX_CONTENT},
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				#{PIC_MEDIA_ID},
+			</if>
+			<if test="SOURCE_URL_TYPE != null">
+				#{SOURCE_URL_TYPE},
+			</if>
+			<if test="SOURCE_URL != null">
+				#{SOURCE_URL},
+			</if>
+			<if test="NO_ADV != null">
+				#{NO_ADV},
+			</if>
+			<if test="IS_LOCK != null">
+				#{IS_LOCK},
+			</if>
+			<if test="IT_TYPE != null">
+				#{IT_TYPE},
+			</if>
+			<if test="IT_GROUP_ID != null">
+				#{IT_GROUP_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="IT_ORDER != null">
+				#{IT_ORDER},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="map">
+		UPDATE WX_IT
+		<set>
+			<if test="TITLE != null">
+				TITLE = #{TITLE},
+			</if>
+			<if test="AUTHOR != null">
+				AUTHOR = #{AUTHOR},
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION = #{DESCRIPTION},
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID = #{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="PIC_URL_WX != null">
+				PIC_URL_WX = #{PIC_URL_WX},
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				PIC_MEDIA_ID = #{PIC_MEDIA_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+			<if test="MUSIC_URL != null">
+				MUSIC_URL = #{MUSIC_URL},
+			</if>
+			<if test="HQMUSIC_URL != null">
+				HQMUSIC_URL = #{HQMUSIC_URL},
+			</if>
+			<if test="MEDIA_ID != null">
+				MEDIA_ID = #{MEDIA_ID},
+			</if>
+			<if test="THUMB_MEDIA_ID != null">
+				THUMB_MEDIA_ID = #{THUMB_MEDIA_ID},
+			</if>
+			<if test="CONTENT != null">
+				CONTENT = #{CONTENT},
+			</if>
+			<if test="SOURCE_URL_TYPE != null">
+				SOURCE_URL_TYPE = #{SOURCE_URL_TYPE},
+			</if>
+			<if test="SOURCE_URL != null">
+				SOURCE_URL = #{SOURCE_URL},
+			</if>
+			<if test="NO_ADV != null">
+				NO_ADV = #{NO_ADV},
+			</if>
+			<if test="IS_LOCK != null">
+				IS_LOCK = #{IS_LOCK},
+			</if>
+			<if test="IT_ORDER != null">
+				IT_ORDER = #{IT_ORDER},
+			</if>
+		</set>
+		WHERE IT_ID = #{IT_ID}
+	</update>
+	<update id="updateCount" parameterType="map">
+		UPDATE WX_IT
+		<set>
+			<if test="IT_COUNT != null">
+				IT_COUNT = #{IT_COUNT},
+			</if>
+		</set>
+		WHERE IT_GROUP_ID = #{IT_GROUP_ID}
+	</update>
+	<update id="publishIT" parameterType="list">
+		UPDATE WX_IT
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="PUBLISH_URL =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.IT_ID!=null">
+						when IT_ID=#{item.IT_ID} then #{item.PUBLISH_URL}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="PUBLISH =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.IT_ID!=null">
+						when IT_ID=#{item.IT_ID} then '1'
+					</if>
+				</foreach>
+			</trim>
+			<!-- <trim prefix="IT_ORDER =case" suffix="end," > <foreach collection="list" 
+				item="item" index="index"> <if test="item.IT_ID!=null"> when IT_ID=#{item.IT_ID} 
+				then #{item.IT_ORDER} </if> </foreach> </trim> -->
+			<trim prefix="MEDIA_ID =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.IT_ID!=null">
+						when IT_ID=#{item.IT_ID} then #{item.MEDIA_ID}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		where IT_ID in
+		<foreach collection="list" index="index" item="item"
+			separator="," open="(" close=")">
+			#{item.IT_ID}
+		</foreach>
+	</update>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WebHomeSpace">
+	<sql id="Base_Column_List_NAV">
+		NAV_ID,PIC_ID,PIC_URL,TITLE,CATEGORY,RESPONSE_TITLE,RESPONSE,PUBLISH,RANK,
+		CREATE_TIME,RESPONSE_ID,GZH_ID
+	</sql>
+	<sql id="Base_Column_List_BOTTOM">
+		HAC_ID,PIC_ID,PIC_URL,TITLE,CATEGORY,INTRO,RESPONSE,PUBLISH,RANK,
+		CREATE_TIME,RESPONSE_ID,GZH_ID
+	</sql>
+	<select id="getNav" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_NAV" />
+		FROM STORE_NAV
+		WHERE GZH_ID = #{GZH_ID}
+		and PUBLISH='on'
+		ORDER BY RANK
+	</select>
+	<select id="getHac" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_BOTTOM" />
+		FROM STORE_HAC
+		WHERE GZH_ID = #{GZH_ID}
+		and PUBLISH='on'
+	</select>
+</mapper>

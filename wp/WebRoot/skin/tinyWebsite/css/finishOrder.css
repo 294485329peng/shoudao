@@ -1,0 +1,55 @@
+.dingdanlist {
+    background: #fff none repeat scroll 0 0;
+    cursor: default;
+    margin: 12px 0 0;
+    border-bottom: 1px solid #ddd;
+}
+table {
+    border-collapse: collapse;
+}
+.dingdanlist td {
+    padding: 10px;
+}
+.dingdanlist td .qingqu {
+    white-space: normal;
+}
+
+.dingdanlist th {
+    color: #f60;
+    font-size: 1.8rem;
+}
+.dingdanlist td time {
+    color: #999;
+    display: block;
+}
+.orange {
+    color: #f60;
+}
+.ord_img {
+    height: auto;
+    width: auto !important;
+}
+.dingdanlist th {
+     color: #f60;
+     font-size: 18px;
+     padding: 4px;
+    padding-left: 10px;
+ }
+.dingdanlist tr {
+    border-top: 1px solid #ddd;
+}
+.th-text{
+    font-size: 1.8rem;
+    text-align: left;
+}
+.strong-text{
+    font-size: 1.2rem;
+}
+.dingdanlist td, .dingdanlist td h3 {
+    font-size: 12px;
+}
+.tit {
+    color: #535353;
+    font-size: 115%;
+    font-weight: normal;
+}

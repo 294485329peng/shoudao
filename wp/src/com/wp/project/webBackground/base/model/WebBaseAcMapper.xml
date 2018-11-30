@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WebBCAcSpace">
+	<sql id="Base_Column_List">
+		HAC_ID,PIC_ID,PIC_URL,TITLE,CATEGORY,INTRO,RESPONSE,PUBLISH,RANK,
+		CREATE_TIME,RESPONSE_ID,RESPONSE_TITLE,GZH_ID
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_HAC
+		WHERE HAC_ID = #{HAC_ID}
+	</select>
+	<select id="rankqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_HAC
+		WHERE GZH_ID = #{t.GZH_ID}
+		AND PUBLISH = #{t.PUBLISH}
+		<if test="t.TITLE != null" >
+      	AND TITLE LIKE concat('%', #{t.TITLE}, '%')
+    	</if>
+		ORDER BY RANK DESC
+	</select>
+	
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_HAC
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.TITLE != null" >
+      	AND TITLE LIKE concat('%', #{t.TITLE}, '%')
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_HAC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="HAC_ID != null">
+				HAC_ID,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="TITLE != null">
+				TITLE,
+			</if>
+			<if test="CATEGORY != null">
+				CATEGORY,
+			</if>
+			<if test="INTRO != null">
+				INTRO,
+			</if>
+			<if test="RESPONSE != null">
+				RESPONSE,
+			</if>
+			<if test="RESPONSE_TITLE != null">
+				RESPONSE_TITLE,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="RESPONSE_ID != null">
+				RESPONSE_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="HAC_ID != null">
+				#{HAC_ID},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="TITLE != null">
+				#{TITLE},
+			</if>
+			<if test="CATEGORY != null">
+				#{CATEGORY},
+			</if>
+			<if test="INTRO != null">
+				#{INTRO},
+			</if>
+			<if test="RESPONSE != null">
+				#{RESPONSE},
+			</if>
+			<if test="RESPONSE_TITLE != null">
+				#{RESPONSE_TITLE},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="RESPONSE_ID != null">
+				#{RESPONSE_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+		</trim>
+	</insert>
+	<delete id="delete" parameterType="string">
+		DELETE FROM STORE_HAC
+		WHERE HAC_ID = #{HAC_ID}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE STORE_HAC
+		<set>
+			<if test="PIC_ID != null">
+				PIC_ID = #{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="TITLE != null">
+				TITLE = #{TITLE},
+			</if>
+			<if test="CATEGORY != null">
+				CATEGORY = #{CATEGORY},
+			</if>
+			<if test="INTRO != null">
+				INTRO = #{INTRO},
+			</if>
+			<if test="RESPONSE != null">
+				RESPONSE=#{RESPONSE},
+			</if>
+			<if test="RESPONSE_TITLE != null">
+				RESPONSE_TITLE=#{RESPONSE_TITLE},
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH=#{PUBLISH},
+			</if>
+			<if test="RANK != null">
+				RANK=#{RANK},
+			</if>
+			<if test="RESPONSE_ID != null">
+				RESPONSE_ID=#{RESPONSE_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+		</set>
+		WHERE HAC_ID = #{HAC_ID}
+	</update>
+	<update id="batchUpdateRank"  parameterType="java.util.List">
+      
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                UPDATE STORE_HAC 
+                <set>
+                	<if test="item.RANK!=null">
+                          RANK = ${item.RANK}
+                    </if>          
+                </set>
+                WHERE HAC_ID = #{HAC_ID}
+         </foreach>
+          
+    </update>
+</mapper>

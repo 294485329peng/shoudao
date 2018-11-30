@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="activitySpace">
+	<sql id="Base_Column_List">
+		ACTIVITY_ID,PIC_ID,PIC_URL,TITLE,DESCRIPTION,CONTENT,PUBLISH,RANK,
+		CREATE_TIME,RESPONSE,RESPONSE_ID,RESPONSE_TITLE,SHOW_PRICE,BUTTON1,ACTION1,BUTTON2,ACTION2,GZH_ID
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ACTIVITY
+		WHERE ACTIVITY_ID = #{ACTIVITY_ID}
+	</select>
+	<select id="rankqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ACTIVITY
+		WHERE GZH_ID = #{t.GZH_ID}
+			AND PUBLISH = #{t.PUBLISH}
+		ORDER BY RANK DESC
+	</select>
+	
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ACTIVITY
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.TITLE != null" >
+      	AND TITLE LIKE concat('%', #{t.TITLE}, '%')
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_ACTIVITY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ACTIVITY_ID != null">
+				ACTIVITY_ID,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="TITLE != null">
+				TITLE,
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION,
+			</if>
+			<if test="CONTENT != null">
+				CONTENT,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="BUTTON1 != null">
+				BUTTON1,
+			</if>
+			<if test="ACTION1 != null">
+				ACTION1,
+			</if>
+			<if test="BUTTON2 != null">
+				BUTTON2,
+			</if>
+			<if test="ACTION2 != null">
+				ACTION2,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="RESPONSE != null">
+				RESPONSE,
+			</if>
+			<if test="RESPONSE_ID != null">
+				RESPONSE_ID,
+			</if>
+			<if test="RESPONSE_TITLE != null">
+				RESPONSE_TITLE,
+			</if>
+			<if test="SHOW_PRICE != null">
+				SHOW_PRICE
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ACTIVITY_ID != null">
+				#{ACTIVITY_ID},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="TITLE != null">
+				#{TITLE},
+			</if>
+			<if test="DESCRIPTION != null">
+				#{DESCRIPTION},
+			</if>
+			<if test="CONTENT != null">
+				#{CONTENT},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="BUTTON1 != null">
+				#{BUTTON1},
+			</if>
+			<if test="ACTION1 != null">
+				#{ACTION1},
+			</if>
+			<if test="BUTTON2 != null">
+				#{BUTTON2},
+			</if>
+			<if test="ACTION2 != null">
+				#{ACTION2},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="RESPONSE != null">
+				#{RESPONSE},
+			</if>
+			<if test="RESPONSE_ID != null">
+				#{RESPONSE_ID},
+			</if>
+			<if test="RESPONSE_TITLE != null">
+				#{RESPONSE_TITLE},
+			</if>
+			<if test="SHOW_PRICE != null">
+				#{SHOW_PRICE}
+			</if>
+			
+		</trim>
+	</insert>
+	<delete id="delete" parameterType="string">
+		DELETE FROM STORE_ACTIVITY
+		WHERE  ACTIVITY_ID = #{ACTIVITY_ID}
+		
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE STORE_ACTIVITY
+		<set>
+			<if test="PIC_ID != null">
+				PIC_ID = #{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="TITLE != null">
+				TITLE = #{TITLE},
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION = #{DESCRIPTION},
+			</if>
+			<if test="CONTENT != null">
+				CONTENT=#{CONTENT},
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH=#{PUBLISH},
+			</if>
+			<if test="RANK != null">
+				RANK=#{RANK},
+			</if>
+			<if test="BUTTON1 != null">
+				BUTTON1=#{BUTTON1},
+			</if>
+			<if test="ACTION1 != null">
+				ACTION1=#{ACTION1},
+			</if>
+			<if test="BUTTON2 != null">
+				BUTTON2=#{BUTTON2},
+			</if>
+			<if test="ACTION2 != null">
+				ACTION2=#{ACTION2},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+			<if test="RESPONSE_TITLE != null">
+				RESPONSE_TITLE=#{RESPONSE_TITLE},
+			</if>
+			<if test="RESPONSE != null">
+				RESPONSE=#{RESPONSE},
+			</if>
+			<if test="RESPONSE_ID != null">
+				RESPONSE_ID=#{RESPONSE_ID},
+			</if>
+			<if test="SHOW_PRICE != null">
+				SHOW_PRICE=#{SHOW_PRICE},
+			</if>
+		</set>
+		WHERE ACTIVITY_ID = #{ACTIVITY_ID}
+	</update>
+	<update id="batchUpdateRank"  parameterType="java.util.List">
+      
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                UPDATE STORE_ACTIVITY 
+                <set>
+                	<if test="item.RANK!=null">
+                          RANK = ${item.RANK}
+                    </if>          
+                </set>
+                WHERE  ACTIVITY_ID = #{item.ACTIVITY_ID}
+				
+         </foreach>
+          
+    </update>
+</mapper>

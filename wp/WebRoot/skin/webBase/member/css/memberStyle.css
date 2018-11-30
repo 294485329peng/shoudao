@@ -1,0 +1,32 @@
+.select-class {
+	width: 130px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	height: 22px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 12px;
+}
+
+.toolbar-ul {
+	width: 794px;
+}
+
+.search-img {
+	width: 25px;
+	height: 25px;
+}
+
+.search-input {
+	height: 21px;
+	width: 170px;
+}
+.imgtable td {
+    border-right: 1px dotted #c7c7c7;
+    line-height: 20px;
+    text-indent: 8px;
+}
+.imgtable th {
+    
+    text-indent: 8px;
+}

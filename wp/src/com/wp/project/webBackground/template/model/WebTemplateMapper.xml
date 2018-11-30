@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WebTemplateSpace">
+	<sql id="Base_Column_List">
+		WAP_ID,NAME,WAP_URL,WAP_TYPE,GROUP_ID,PIC_URL,PIC_ID,CREATE_TIME
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_WAP
+		WHERE WAP_ID = #{WAP_ID}
+	</select>
+	
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_WAP
+		WHERE 1 = 1
+		ORDER BY CREATE_TIME DESC
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO WX_WAP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="WAP_ID != null">
+				WAP_ID,
+			</if>
+			<if test="NAME != null">
+				NAME,
+			</if>
+			<if test="WAP_URL != null">
+				WAP_URL,
+			</if>
+			<if test="WAP_TYPE != null">
+				WAP_TYPE,
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="WAP_ID != null">
+				#{WAP_ID},
+			</if>
+			<if test="NAME != null">
+				#{NAME},
+			</if>
+			<if test="WAP_URL != null">
+				#{WAP_URL},
+			</if>
+			<if test="WAP_TYPE != null">
+				#{WAP_TYPE},
+			</if>
+			<if test="GROUP_ID != null">
+				#{GROUP_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+		</trim>
+	</insert>
+	<delete id="delete" parameterType="string">
+		DELETE FROM WX_WAP
+		WHERE WAP_ID = #{WAP_ID}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE WX_WAP
+		<set>
+			<if test="NAME != null">
+				NAME = #{NAME},
+			</if>
+			<if test="WAP_URL != null">
+				WAP_URL = #{WAP_URL},
+			</if>
+			<if test="WAP_TYPE != null">
+				WAP_TYPE = #{WAP_TYPE},
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID = #{GROUP_ID},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID=#{PIC_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+		</set>
+		WHERE WAP_ID = #{WAP_ID}
+	</update>
+</mapper>

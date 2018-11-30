@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tinyWebSpace" >
+  <insert id="insert" parameterType="map">
+		INSERT INTO STORE_TEMPLATE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="TEMPLATE_ID != null">
+				TEMPLATE_ID,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="NAME != null">
+				NAME,
+			</if>
+			<if test="NUMBER != null">
+				NUMBER,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="TEMPLATE_ID != null">
+				#{TEMPLATE_ID},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="NAME != null">
+				#{NAME},
+			</if>
+			<if test="NUMBER != null">
+				#{NUMBER},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME}
+			</if>
+		</trim>
+	</insert>	
+  <select id="queryPageAll" resultType="map" parameterType="string" >
+    SELECT
+    *
+    FROM STORE_TEMPLATE
+    WHERE 1=1
+  </select>
+  <select id="get" resultType="map" parameterType="string" >
+    SELECT
+    *
+    FROM STORE_TEMPLATE
+    WHERE TEMPLATE_ID = #{TEMPLATE_ID}
+  </select>
+  
+  <delete id="delete" parameterType="string" >
+    DELETE FROM STORE_TEMPLATE
+    WHERE ADMIN_ID = #{ADMIN_ID}
+  </delete>
+  <update id="update" parameterType="map" >
+   UPDATE STORE_TEMPLATE
+    <set >
+      <if test="PIC_ID != null" >
+        PIC_ID = #{PIC_ID},
+      </if>
+      <if test="PIC_URL != null" >
+        PIC_URL = #{PIC_URL},
+      </if>
+      <if test="NAME != null" >
+        NAME = #{NAME},
+      </if>
+      <if test="NUMBER != null" >
+        NUMBER = #{NUMBER},
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME = #{CREATE_TIME},
+      </if>
+    </set>
+    WHERE TEMPLATE_ID = #{TEMPLATE_ID}
+  </update>
+  <update id="updateGzhTemp" parameterType="map" >
+   UPDATE WX_GZH
+    <set >
+        TEMPLATE_ID = #{TEMPLATE_ID}
+    </set>
+    WHERE ADMIN_ID = #{ADMIN_ID}
+  </update>
+</mapper>

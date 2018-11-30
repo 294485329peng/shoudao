@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="weixinGetMessageSpace">
+	<sql id="Base_Column_List">
+		ADMIN_ID,GZH_ID,GZH_APPID,GZH_APPSECRET,GZH_TOKEN,ENCODINGAESKEY,GZH_PASSWORD,
+		GZH_ACCESS_TOKEN,GZH_ACCESS_TOKEN_VALID
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_GZH
+		WHERE GZH_ID = #{GZH_ID}
+	</select>
+	<select id="getACT" resultType="map" parameterType="string">
+		SELECT
+		AUTHORIZATION_ACCESS_TOKEN,TOKEN_EXPIRES_IN,GZH_APPID,AUTHORIZATION_REFRESH_TOKEN
+		FROM WX_GZH
+		WHERE GZH_ID =
+		#{GZH_ID}
+	</select>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_KEYWORD_RULE
+		WHERE 1=1
+		<if test="GZH_ID != null">
+			AND RULE_ID = #{RULE_ID}
+		</if>
+	</select>
+	<update id="updateCAccessToken" parameterType="map">
+		UPDATE WX_GZH
+		<set>
+			AUTHORIZATION_ACCESS_TOKEN = #{AUTHORIZATION_ACCESS_TOKEN},
+			TOKEN_EXPIRES_IN =
+			#{TOKEN_EXPIRES_IN},
+		</set>
+		WHERE GZH_ID = #{GZH_ID}
+	</update>
+	<update id="updateAccessToken" parameterType="map">
+		UPDATE WX_GZH
+		<set>
+			GZH_ACCESS_TOKEN = #{GZH_ACCESS_TOKEN},
+			GZH_ACCESS_TOKEN_VALID =
+			#{GZH_ACCESS_TOKEN_VALID},
+		</set>
+		WHERE GZH_ID = #{GZH_ID}
+	</update>
+</mapper>

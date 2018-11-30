@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="userInfoSpace" >
+  <sql id="Base_Column_List" >
+    GZH_ID,SERVICE_PHONE,COMPANY_ADDRESS,DELETE,CREATE_TIME,COMPANY_NAME
+  </sql>
+  <select id="get" resultType="map" parameterType="string" >
+    SELECT
+    *
+    FROM WX_GZH_COMPANY
+    WHERE GZH_ID = #{GZH_ID}
+  </select>
+  <delete id="delete" parameterType="string" >
+    DELETE FROM GZH_OPERATOR
+    WHERE GZH_ID = #{GZH_ID}
+  </delete>
+  <insert id="insert" parameterType="map">
+		INSERT INTO WX_GZH_COMPANY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="SERVICE_PHONE != null">
+				SERVICE_PHONE,
+			</if>
+			<if test="COMPANY_ADDRESS != null">
+				COMPANY_ADDRESS,
+			</if>
+			<if test="DELETE != null">
+				DELETE,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="COMPANY_NAME != null">
+				COMPANY_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="SERVICE_PHONE != null">
+				#{SERVICE_PHONE},
+			</if>
+			<if test="COMPANY_ADDRESS != null">
+				#{COMPANY_ADDRESS},
+			</if>
+			<if test="DELETE != null">
+				#{DELETE},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="COMPANY_NAME != null">
+				#{COMPANY_NAME},
+			</if>
+		</trim>
+	</insert>
+  
+  <update id="update" parameterType="map" >
+   UPDATE WX_GZH_COMPANY
+    <set >
+      <if test="SERVICE_PHONE != null" >
+        SERVICE_PHONE = #{SERVICE_PHONE},
+      </if>
+      <if test="DELETE != null" >
+        DELETE = #{DELETE},
+      </if>
+      <if test="COMPANY_ADDRESS != null" >
+        COMPANY_ADDRESS = #{COMPANY_ADDRESS},
+      </if>
+      <if test="COMPANY_NAME != null" >
+        COMPANY_NAME = #{COMPANY_ADDRESS},
+      </if>
+    </set>
+    WHERE GZH_ID = #{GZH_ID}
+  </update>
+</mapper>

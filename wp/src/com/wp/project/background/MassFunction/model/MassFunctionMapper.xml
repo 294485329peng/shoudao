@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="massFunctionSpace">
+	<sql id="Base_Column_List">
+		MASS_ID,TYPE,IT_MEDIA_ID,IT_NAME,SAYTEXT,
+		PIC_MEDIA_ID,PIC_URL,TARGET,SEX,AREA,GZH_ID,CREATE_TIME
+	</sql>
+	<select id="getByDate" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_MASS
+		WHERE  GZH_ID = #{GZH_ID}
+		<if test="CREATE_TIME != null" >
+      	AND CREATE_TIME LIKE concat('%', #{CREATE_TIME}, '%')
+    	</if>
+	</select>
+	<select id="getByMassId" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_MASS
+		WHERE MASS_ID = #{MASS_ID}
+		
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_MASS
+		WHERE GZH_ID = #{t.GZH_ID}
+		
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO WX_MASS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="MASS_ID != null">
+				MASS_ID,
+			</if>
+			<if test="TYPE != null">
+				TYPE,
+			</if>
+			<if test="IT_MEDIA_ID != null">
+				IT_MEDIA_ID,
+			</if>
+			<if test="IT_NAME != null">
+				IT_NAME,
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT,
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				PIC_MEDIA_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="TARGET != null">
+				TARGET,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="SEX != null">
+				SEX,
+			</if>
+			<if test="AREA != null">
+				AREA
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="MASS_ID != null">
+				#{MASS_ID},
+			</if>
+			<if test="TYPE != null">
+				#{TYPE},
+			</if>
+			<if test="IT_MEDIA_ID != null">
+				#{IT_MEDIA_ID},
+			</if>
+			<if test="IT_NAME != null">
+				#{IT_NAME},
+			</if>
+			<if test="SAYTEXT != null">
+				#{SAYTEXT},
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				#{PIC_MEDIA_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="TARGET != null">
+				#{TARGET},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="SEX != null">
+				#{SEX},
+			</if>
+			<if test="AREA != null">
+				#{AREA}
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM WX_MASS
+		WHERE
+		MASS_ID = #{MASS_ID}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMcenterSpace">
+	<sql id="Base_Column_List">
+		OPEN_ID,GZH_ID,NICKNAME,SEX, CITY,COUNTRY,PROVINCE,LANGUAGE,HEADIMGURL,SUBSCRIBE_TIME,UNION_ID,REMARK,GROUP_ID,CREATE_TIME,SUBSCRIBE,CANCEL_TIME,
+		LAST_TIME,REAL_NAME,AGE,DEGREE,STORE_GROUP_ID,IDENTITY_CARD,PHONE,MONEY,POINT,BIRTHDAY,ALL_ORDER_COUNT,FINISH_ORDER_COUNT,VOLUME_SALES,ATTESTATION,LOGIN_NAME,LOGIN_PASSWORD,MEMBER_ID,DELETE_MEMBER,STORE_REMARK
+	 
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		u.* ,c.CARD_ID
+		FROM STORE_USER u LEFT JOIN WX_USER_CARD c ON  c.OPEN_ID = u.OPEN_ID
+		WHERE u.OPEN_ID = #{OPEN_ID}
+	</select>
+</mapper>

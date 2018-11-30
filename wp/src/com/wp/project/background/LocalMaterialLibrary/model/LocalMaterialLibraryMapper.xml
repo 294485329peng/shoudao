@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="localITSpace">
+	<sql id="Base_Column_List">
+		LOCAL_IT_ID, TITLE, PIC_ID,
+		PIC_URL,CREATE_TIME,GZH_ID,DESCRIPTION,RANK,URL,GROUP_ID,MAIN,USER_INFO
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_IT_LOCAL
+		WHERE LOCAL_IT_ID = #{LOCAL_IT_ID}
+	</select>
+	<select id="getGroupId" resultType="string" parameterType="string">
+		SELECT
+		GROUP_ID
+		FROM WX_IT_LOCAL
+		WHERE LOCAL_IT_ID = #{LOCAL_IT_ID}
+	</select>
+	<select id="queryITByGroupID" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_IT_LOCAL
+		WHERE
+		GROUP_ID = #{GROUP_ID}
+		ORDER BY RANK
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_IT_LOCAL
+		WHERE GZH_ID = #{t.GZH_ID}
+		AND MAIN = '1'
+		<if test="t.TITLE != null" >
+      	AND TITLE LIKE concat('%', #{t.TITLE}, '%')
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<delete id="deleteById" parameterType="string">
+		DELETE FROM WX_IT_LOCAL
+		WHERE LOCAL_IT_ID = #{LOCAL_IT_ID}
+	</delete>
+	<delete id="deleteByGroupId" parameterType="string">
+		DELETE FROM WX_IT_LOCAL
+		WHERE GROUP_ID = #{GROUP_ID}
+	</delete>
+	<insert id="insert" parameterType="map">
+		INSERT INTO WX_IT_LOCAL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="LOCAL_IT_ID != null">
+				LOCAL_IT_ID,
+			</if>
+			<if test="TITLE != null">
+				TITLE,
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="USER_INFO != null">
+				USER_INFO,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="URL != null">
+				URL,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="MAIN != null">
+				MAIN,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="LOCAL_IT_ID != null">
+				#{LOCAL_IT_ID},
+			</if>
+			<if test="TITLE != null">
+				#{TITLE},
+			</if>
+			<if test="DESCRIPTION != null">
+				#{DESCRIPTION},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="USER_INFO != null">
+				#{USER_INFO},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="URL != null">
+				#{URL},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="GROUP_ID != null">
+				#{GROUP_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="MAIN != null">
+				#{MAIN},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="map">
+		UPDATE WX_IT_LOCAL
+		<set>
+			<if test="TITLE != null">
+				TITLE = #{TITLE},
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION = #{DESCRIPTION},
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID = #{PIC_ID},
+			</if>
+			<if test="USER_INFO != null">
+				USER_INFO = #{USER_INFO},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+			<if test="URL != null">
+				URL = #{URL},
+			</if>
+			<if test="RANK != null">
+				RANK = #{RANK},
+			</if>
+			<if test="MAIN != null">
+				MAIN = #{MAIN},
+			</if>
+		</set>
+		WHERE LOCAL_IT_ID = #{LOCAL_IT_ID}
+	</update>
+	<update id="batchUpdate" parameterType="list">
+		UPDATE WX_IT_LOCAL
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="CREATE_TIME =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.CREATE_TIME!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.CREATE_TIME}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="TITLE =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.TITLE!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.TITLE}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="PIC_ID =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.PIC_ID!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.PIC_ID}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="USER_INFO =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.USER_INFO!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.USER_INFO}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="PIC_URL =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.PIC_URL!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.PIC_URL}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="DESCRIPTION =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.DESCRIPTION!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.DESCRIPTION}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="IT_ORDER =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.IT_ID!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.IT_ORDER}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="RANK =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.RANK!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.RANK}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="URL =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.RANK!=null">
+						when LOCAL_IT_ID=#{item.LOCAL_IT_ID} then #{item.URL}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		where
+		<foreach collection="list" separator="or" item="item" index="index">
+			LOCAL_IT_ID = #{item.LOCAL_IT_ID}
+		</foreach>
+	</update>
+</mapper>

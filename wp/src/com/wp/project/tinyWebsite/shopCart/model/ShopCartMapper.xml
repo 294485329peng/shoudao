@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shopCartSpace">
+	<!-- <sql id="Base_Column_List">
+	
+	</sql> -->
+	<insert id="insertSC" parameterType="map">
+		INSERT INTO STORE_SHOP_CART
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="SC_ID != null">
+				SC_ID,
+			</if>
+			<if test="OPEN_ID != null">
+				OPEN_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="GOODS_DETAIL_ID != null">
+				GOODS_DETAIL_ID,
+			</if>
+			<if test="AMOUNT != null">
+				AMOUNT,
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE,
+			</if>
+			<if test="PAY_TYPE != null">
+				PAY_TYPE,
+			</if>
+			<if test="IS_ORDER != null">
+				IS_ORDER,
+			</if>
+			<if test="GOODS_ID != null">
+				GOODS_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="SC_ID != null">
+				#{SC_ID},
+			</if>
+			<if test="OPEN_ID != null">
+				#{OPEN_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="GOODS_DETAIL_ID != null">
+				#{GOODS_DETAIL_ID},
+			</if>
+			<if test="AMOUNT != null">
+				#{AMOUNT},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				#{TOTAL_PRICE},
+			</if>
+			<if test="PAY_TYPE != null">
+				#{PAY_TYPE},
+			</if>
+			<if test="IS_ORDER != null">
+				#{IS_ORDER},
+			</if>
+			<if test="GOODS_ID != null">
+				#{GOODS_ID},
+			</if>
+		</trim>
+	</insert>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT ssc.*,g.PIC_URL1,gd.INVENTORY,g.GOODS_NAME,gd.PRICE,g.SHOW_POINT AS POINT ,gd.MAIN_SPECIFICATION,gd.CHILD_SPECIFICATION
+		FROM STORE_SHOP_CART ssc
+			LEFT JOIN STORE_GOODS_DETAIL gd ON ssc.GOODS_DETAIL_ID = gd.GOODS_DETAIL_ID
+		LEFT JOIN STORE_GOODS g ON gd.GOODS_ID = g.GOODS_ID
+		WHERE
+			ssc.OPEN_ID = #{OPEN_ID}
+			AND ssc.IS_ORDER = #{IS_ORDER}
+	</select>
+	<select id="get" resultType="map" parameterType="String">
+		SELECT
+		*
+		FROM STORE_SHOP_CART
+		WHERE GOODS_DETAIL_ID = #{GOODS_DETAIL_ID}
+	</select>
+	<select id="getCount" resultType="map" parameterType="String">
+		SELECT
+		 COUNT(*) AS COUNT
+		FROM STORE_SHOP_CART
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+	<update id="updateSCByGI" parameterType="map">
+		UPDATE STORE_SHOP_CART
+		<set>
+			<if test="CREATE_TIME != null">
+				GOODS_DETAIL_NAME = #{GOODS_DETAIL_NAME},
+			</if>
+			<if test="AMOUNT != null">
+				AMOUNT = #{AMOUNT},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE = #{TOTAL_PRICE},
+			</if>
+			<if test="GOODS_NAME != null">
+				GOODS_NAME = #{GOODS_NAME},
+			</if>
+		</set>
+		WHERE GOODS_DETAIL_ID = #{GOODS_DETAIL_ID}
+	</update>
+	<update id="update" parameterType="map">
+		UPDATE STORE_SHOP_CART
+		<set>
+			<if test="CREATE_TIME != null">
+				GOODS_DETAIL_NAME = #{GOODS_DETAIL_NAME},
+			</if>
+			<if test="AMOUNT != null">
+				AMOUNT = #{AMOUNT},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE = #{TOTAL_PRICE},
+			</if>
+			<if test="GOODS_NAME != null">
+				GOODS_NAME = #{GOODS_NAME},
+			</if>
+		</set>
+		WHERE SC_ID = #{SC_ID}
+	</update>
+	<delete id="deleteSC" parameterType="map">
+		DELETE FROM STORE_SHOP_CART
+		WHERE  GOODS_DETAIL_ID = #{GOODS_DETAIL_ID}
+		AND OPEN_ID = #{OPEN_ID}
+		AND IS_ORDER = '0'
+	</delete>
+	<delete id="delete" parameterType="java.util.List">
+		DELETE FROM STORE_SHOP_CART
+		WHERE  SC_ID IN
+		<foreach collection="list" item = "item" open="(" separator="," close=")">#{ item.SC_ID}  
+  
+    	</foreach>
+	</delete>
+	<!-- <update id="batchUpdateSC" parameterType="java.util.List">
+	<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+		UPDATE STORE_SHOP_CART
+		<set>
+			<if test="item.IS_ORDER != null">
+				IS_ORDER = #{item.IS_ORDER},
+			</if>
+		</set>
+		WHERE SC_ID = #{item.SC_ID}
+		</foreach>
+	</update> -->
+	<update id="batchUpdateSC" parameterType="list">
+		UPDATE STORE_SHOP_CART
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="IS_ORDER =case" suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.IS_ORDER!=null">
+						when SC_ID=#{item.SC_ID} then #{item.IS_ORDER}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		where
+		<foreach collection="list" separator="or" item="item" index="index">
+			SC_ID = #{item.SC_ID}
+		</foreach>
+	</update>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WebProSpace">
+	<sql id="Base_Column_List">
+		PRO_ID,PRO_TITLE,CONTENT,IS_NAV,GZH_ID,CREATE_TIME,PUBLISH
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_PRO
+		WHERE PRO_ID = #{PRO_ID}
+	</select>
+	<select id="getCount" resultType="map" parameterType="string">
+		SELECT
+		COUNT(*) AS COUNT
+		FROM STORE_PRO
+		WHERE PRO_ID = #{PRO_ID}
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_PRO
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.PRO_TITLE != null" >
+      	AND PRO_TITLE LIKE concat('%', #{t.PRO_TITLE}, '%')
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="query" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_PRO
+		WHERE GZH_ID = #{GZH_ID}
+	</select>
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_PRO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="PRO_ID != null">
+				PRO_ID,
+			</if>
+			<if test="PRO_TITLE != null">
+				PRO_TITLE,
+			</if>
+			<if test="CONTENT != null">
+				CONTENT,
+			</if>
+			<if test="IS_NAV != null">
+				IS_NAV,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="PRO_ID != null">
+				#{PRO_ID},
+			</if>
+			<if test="PRO_TITLE != null">
+				#{PRO_TITLE},
+			</if>
+			<if test="CONTENT != null">
+				#{CONTENT},
+			</if>
+			<if test="IS_NAV != null">
+				#{IS_NAV},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH}
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="map">
+		UPDATE STORE_PRO
+		<set>
+			<if test="PRO_TITLE != null">
+				PRO_TITLE = #{PRO_TITLE},
+			</if>
+			<if test="CONTENT != null">
+				CONTENT = #{CONTENT},
+			</if>
+			<if test="IS_NAV != null">
+				IS_NAV = #{IS_NAV},
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID = #{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH=#{PUBLISH},
+			</if>
+		</set>
+		WHERE PRO_ID = #{PRO_ID}
+	</update>
+	<delete id="delete" parameterType="string">
+		DELETE FROM STORE_PRO
+		WHERE
+		PRO_ID = #{PRO_ID}
+
+	</delete>
+</mapper>

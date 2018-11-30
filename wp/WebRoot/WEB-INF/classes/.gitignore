@@ -1,0 +1,10 @@
+/cache
+/com
+/config.properties
+/log4j.properties
+/messages
+/mybatis-config.xml
+/props
+/spring-mvc.xml
+/spring.xml
+/test

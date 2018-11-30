@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gzhBsSpace" >
+  <sql id="Base_Column_List_WXGzh" >
+    ADMIN_ID,GZH_NAME,GZH_ID,GZH_WECHAT_ID,GZH_APPID,GZH_APPSECRET,GZH_TOKEN,ENCODINGAESKEY,OPERATOR_ID,GZH_PASSWORD,
+	GZH_ACCESS_TOKEN,CREATE_TIME
+  </sql>
+  <select id="queryPageAll" resultType="map" parameterType="map" >
+    SELECT
+    *
+    FROM WX_GZH
+    WHERE 1=1
+    <if test="t.GZH_NICK_NAME != null" >
+    AND GZH_NICK_NAME LIKE concat('%', #{t.GZH_NICK_NAME}, '%')
+    </if>
+  </select>
+  <select id="get" resultType="map" parameterType="string" >
+    SELECT
+    *
+    FROM WX_GZH
+    WHERE ADMIN_ID = #{ADMIN_ID}
+  </select>
+  
+  <delete id="delete" parameterType="string" >
+    DELETE FROM WX_GZH
+    WHERE ADMIN_ID = #{ADMIN_ID}
+  </delete>
+  <update id="update" parameterType="map" >
+   UPDATE WX_GZH
+    <set >
+      <if test="GZH_ID != null" >
+        GZH_ID = #{GZH_ID},
+      </if>
+      <if test="GZH_NICK_NAME != null" >
+        GZH_NICK_NAME = #{GZH_NICK_NAME},
+      </if>
+      <if test="GZH_HEADER_IMG != null" >
+        GZH_HEADER_IMG = #{GZH_HEADER_IMG},
+      </if>
+      <if test="GZH_VERIFY_TYPE != null" >
+        GZH_VERIFY_TYPE = #{GZH_VERIFY_TYPE},
+      </if>
+      <if test="GZH_QRCODE_URL != null" >
+        GZH_QRCODE_URL = #{GZH_QRCODE_URL},
+      </if>
+      <if test="GZH_AUTH_STATUS != null" >
+        GZH_AUTH_STATUS = #{GZH_AUTH_STATUS},
+      </if>
+      <if test="GZH_AUTH_TYPE != null" >
+        GZH_AUTH_TYPE = #{GZH_AUTH_TYPE},
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME = #{CREATE_TIME},
+      </if>
+      <if test="TMEPLATE_ID != null" >
+        TMEPLATE_ID = #{TMEPLATE_ID},
+      </if>
+    </set>
+    WHERE ADMIN_ID = #{ADMIN_ID}
+  </update>
+  
+</mapper>

@@ -1,0 +1,26 @@
+
+.btn1 {
+	min-width: 104px;
+	margin-right: 1em;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    width:auto;
+    line-height: 30px;
+    overflow: visible;
+    padding: 0 22px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    background-color: #44b549;
+    background-image: linear-gradient(to bottom, #44b549 0px, #44b549 100%);
+    border-color: #44b549;
+    color: #fff;
+}
+.btn_primary1 {
+    margin-top: 20px; margin-left: 105px;
+}

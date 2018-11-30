@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberCardSpace">
+	<sql id="Base_Column_List">
+	 CARD_ID,PIC_ID,PIC_URL,NAME,CREATE_TIME,GZH_ID,PRIVILEGE,CONTACT
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		*
+		FROM STORE_CARD
+		WHERE GZH_ID = #{GZH_ID}
+	</select>
+	<select id="getPic" resultType="map" parameterType="string">
+		SELECT
+		PIC_URL
+		FROM STORE_CARD
+		WHERE GZH_ID = #{GZH_ID}
+	</select>
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_CARD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="CARD_ID != null">
+				CARD_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="NAME != null">
+				NAME,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="PRIVILEGE != null">
+				PRIVILEGE,
+			</if>
+			<if test="CONTACT != null">
+				CONTACT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="CARD_ID != null">
+				#{CARD_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="NAME != null">
+				#{NAME},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="PRIVILEGE != null">
+				#{PRIVILEGE},
+			</if>
+			<if test="CONTACT != null">
+				#{CONTACT},
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="map">
+		UPDATE STORE_CARD
+		<set>
+			<if test="PIC_ID != null">
+				PIC_ID = #{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="NAME != null">
+				NAME = #{NAME},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+			<if test="PRIVILEGE != null">
+				PRIVILEGE = #{PRIVILEGE},
+			</if>
+			<if test="CONTACT != null">
+				CONTACT = #{CONTACT},
+			</if>
+		</set>
+		WHERE CARD_ID = #{CARD_ID}
+	</update>
+	
+</mapper>

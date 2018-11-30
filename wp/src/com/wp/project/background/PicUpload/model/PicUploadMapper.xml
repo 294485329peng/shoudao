@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="picUploadSpace">
+	<sql id="Base_Column_List_WX">
+		PIC_ID, PIC_URL_BD, PIC_URL_FWQ, PIC_URL_WX, MEDIA_ID, GZH_ID,
+		IS_USE,CREATE_TIME
+	</sql>
+	<sql id="Base_Column_List_WX_NoGzhId">
+		PIC_ID, PIC_URL_BD, PIC_URL_FWQ, PIC_URL_WX, MEDIA_ID, CREATE_TIME
+	</sql>
+	<sql id="Base_Column_List_Web_NoGzhId">
+		PIC_ID, PIC_URL_BD, PIC_URL_FWQ, IS_USE, GZH_ID, CREATE_TIME
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_WX" />
+		FROM WX_PIC
+		WHERE MEDIA_ID = #{MEDIA_ID}
+	</select>
+	<select id="getMediaId" resultType="string" parameterType="string">
+		SELECT
+		MEDIA_ID
+		FROM WX_PIC
+		WHERE PIC_ID = #{PIC_ID}
+	</select>
+	<select id="getWebPicById" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_Web_NoGzhId" />
+		FROM STORE_PIC
+		WHERE PIC_ID = #{PIC_ID}
+	</select>
+	<select id="getPicByUrl" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_WX" />
+		FROM WX_PIC
+		WHERE PIC_URL_FWQ = #{PIC_URL}
+	</select>
+	<select id="getWebPicByUrl" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_Web_NoGzhId" />
+		FROM STORE_PIC
+		WHERE PIC_URL_FWQ = #{PIC_URL}
+	</select>
+	<select id="getPicById" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_WX" />
+		FROM WX_PIC
+		WHERE PIC_ID = #{PIC_ID}
+	</select>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_WX_NoGzhId" />
+		FROM WX_PIC
+		WHERE GZH_ID = #{GZH_ID}
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_WX_NoGzhId" />
+		FROM WX_PIC
+		WHERE GZH_ID = #{t.GZH_ID}
+
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<delete id="delete" parameterType="string">
+		DELETE FROM WX_PIC
+		WHERE MEDIA_ID = #{MEDIA_ID}
+	</delete>
+	<delete id="deleteWebPic" parameterType="string">
+		DELETE FROM STORE_PIC
+		WHERE PIC_ID = #{PIC_ID}
+	</delete>
+	<insert id="insert" parameterType="map">
+		INSERT INTO WX_PIC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL_BD != null">
+				PIC_URL_BD,
+			</if>
+			<if test="PIC_URL_FWQ != null">
+				PIC_URL_FWQ,
+			</if>
+			<if test="PIC_URL_WX != null">
+				PIC_URL_WX,
+			</if>
+			<if test="MEDIA_ID != null">
+				MEDIA_ID,
+			</if>
+			<if test="IS_USE != null">
+				IS_USE,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL_BD != null">
+				#{PIC_URL_BD},
+			</if>
+			<if test="PIC_URL_FWQ != null">
+				#{PIC_URL_FWQ},
+			</if>
+			<if test="PIC_URL_WX != null">
+				#{PIC_URL_WX},
+			</if>
+			<if test="MEDIA_ID != null">
+				#{MEDIA_ID},
+			</if>
+			<if test="IS_USE != null">
+				#{IS_USE},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertWebPic" parameterType="map">
+		INSERT INTO STORE_PIC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL_BD != null">
+				PIC_URL_BD,
+			</if>
+			<if test="PIC_URL_FWQ != null">
+				PIC_URL_FWQ,
+			</if>
+			<if test="GROUP_ID != null">
+				MEDIA_ID,
+			</if>
+			<if test="IS_USE != null">
+				IS_USE,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL_BD != null">
+				#{PIC_URL_BD},
+			</if>
+			<if test="PIC_URL_FWQ != null">
+				#{PIC_URL_FWQ},
+			</if>
+			<if test="GROUP_ID != null">
+				#{MEDIA_ID},
+			</if>
+			<if test="IS_USE != null">
+				#{IS_USE},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateWebPic" parameterType="map">
+		UPDATE STORE_PIC
+		<set>
+			<if test="PIC_URL_BD != null">
+				PIC_URL_BD = #{PIC_URL_BD},
+			</if>
+			<if test="PIC_URL_FWQ != null">
+				PIC_URL_FWQ = #{PIC_URL_FWQ},
+			</if>
+			<if test="PIC_URL_WX != null">
+				PIC_URL_WX = #{PIC_URL_WX},
+			</if>
+			<if test="IS_USE != null">
+				IS_USE = #{IS_USE},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+		</set>
+		WHERE PIC_ID = #{PIC_ID}
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE WX_PIC
+		<set>
+			<if test="PIC_URL_BD != null">
+				PIC_URL_BD = #{PIC_URL_BD},
+			</if>
+			<if test="PIC_URL_FWQ != null">
+				PIC_URL_FWQ = #{PIC_URL_FWQ},
+			</if>
+			<if test="PIC_URL_WX != null">
+				PIC_URL_WX = #{PIC_URL_WX},
+			</if>
+			<if test="MEDIA_ID != null">
+				MEDIA_ID = #{MEDIA_ID},
+			</if>
+			<if test="IS_USE != null">
+				IS_USE = #{IS_USE},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+		</set>
+		WHERE MEDIA_ID = #{MEDIA_ID}
+	</update>
+
+</mapper>

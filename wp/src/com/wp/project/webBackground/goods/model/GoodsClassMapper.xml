@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goodsClassSpace">
+	<sql id="Base_Column_List_class">
+		GOODS_CLASSIFY_ID,CLASSIFY_NAME,DETAIL,RANK,PUBLISH,
+		CREATE_TIME,GZH_ID
+	</sql>
+	<select id="getClass" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_class" />
+		FROM STORE_GOODS_CLASSIFY
+		WHERE GOODS_CLASSIFY_ID = #{GOODS_CLASSIFY_ID}
+	</select>
+	<select id="classqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_class" />
+		FROM STORE_GOODS_CLASSIFY
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.CLASSIFY_NAME != null" >
+      	AND CLASSIFY_NAME LIKE concat('%', #{t.CLASSIFY_NAME}, '%')
+    	</if>
+		ORDER BY RANK ASC
+	</select>
+	<select id="queryPublish" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_class" />
+		FROM STORE_GOODS_CLASSIFY
+		WHERE GZH_ID = #{GZH_ID}
+		AND PUBLISH = 'on'
+		ORDER BY RANK ASC
+	</select>
+	
+	<insert id="insertClass" parameterType="map">
+		INSERT INTO STORE_GOODS_CLASSIFY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="GOODS_CLASSIFY_ID != null">
+				GOODS_CLASSIFY_ID,
+			</if>
+			<if test="CLASSIFY_NAME != null">
+				CLASSIFY_NAME,
+			</if>
+			<if test="DETAIL != null">
+				DETAIL,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="GOODS_CLASSIFY_ID != null">
+				#{GOODS_CLASSIFY_ID},
+			</if>
+			<if test="CLASSIFY_NAME != null">
+				#{CLASSIFY_NAME},
+			</if>
+			<if test="DETAIL != null">
+				#{DETAIL},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+		</trim>
+	</insert>
+	<delete id="deleteClass" parameterType="string">
+		DELETE FROM STORE_GOODS_CLASSIFY
+		WHERE  GOODS_CLASSIFY_ID = #{GOODS_CLASSIFY_ID}
+		
+	</delete>
+	
+	<update id="updateClass" parameterType="map">
+		UPDATE STORE_GOODS_CLASSIFY
+		<set>
+			<if test="CLASSIFY_NAME != null">
+				CLASSIFY_NAME = #{CLASSIFY_NAME},
+			</if>
+			<if test="DETAIL != null">
+				DETAIL = #{DETAIL},
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH=#{PUBLISH},
+			</if>
+			<if test="RANK != null">
+				RANK=#{RANK},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+		</set>
+		WHERE GOODS_CLASSIFY_ID = #{GOODS_CLASSIFY_ID}
+	</update>
+	<update id="batchUpdateRank"  parameterType="java.util.List">
+      
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                UPDATE STORE_ACTIVITY 
+                <set>
+                	<if test="item.RANK!=null">
+                          RANK = ${item.RANK}
+                    </if>          
+                </set>
+                WHERE  ACTIVITY_ID = #{item.ACTIVITY_ID}
+				
+         </foreach>
+          
+    </update>
+</mapper>

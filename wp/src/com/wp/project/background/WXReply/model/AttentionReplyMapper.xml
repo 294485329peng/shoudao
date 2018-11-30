@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="attentionReplySpace">
+	<sql id="Base_Column_List">
+		ATTENTION_REPLY_ID, PUBLISH, TYPE, SAYTEXT, PIC_MEDIA_ID,
+		PIC_ID, PIC_URL,
+		CREATE_TIME,IT_NAME,IT_GROUP_ID,IT_CREATE_TIME,IT_PIC_URL
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_ATTENTION_REPLY
+		WHERE GZH_ID = #{GZH_ID}
+		AND PUBLISH = '1'
+	</select>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_ATTENTION_REPLY
+		WHERE 1=1
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_ATTENTION_REPLY
+		WHERE 1=1
+		<if test="t.ROLE_NAME != null">
+			AND ROLE_NAME LIKE '%${t.ROLE_NAME}%'
+		</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<delete id="delete" parameterType="string">
+		DELETE FROM WX_ATTENTION_REPLY
+		WHERE GZH_ID = #{GZH_ID}
+	</delete>
+	<delete id="batchDelete" parameterType="map">
+		DELETE FROM WX_ATTENTION_REPLY
+		WHERE 1=2
+		<if test="ROLE_IDS != null">
+			OR GZH_ID IN (${GZH_ID})
+		</if>
+	</delete>
+	<insert id="insert" parameterType="map">
+		INSERT INTO WX_ATTENTION_REPLY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ATTENTION_REPLY_ID != null">
+				ATTENTION_REPLY_ID,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH,
+			</if>
+			<if test="TYPE != null">
+				TYPE,
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT,
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				PIC_MEDIA_ID,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="IT_NAME != null">
+				IT_NAME,
+			</if>
+			<if test="IT_GROUP_ID != null">
+				IT_GROUP_ID,
+			</if>
+			<if test="IT_CREATE_TIME != null">
+				IT_CREATE_TIME,
+			</if>
+			<if test="IT_PIC_URL != null">
+				IT_PIC_URL,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ATTENTION_REPLY_ID != null">
+				#{ATTENTION_REPLY_ID},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH},
+			</if>
+			<if test="TYPE != null">
+				#{TYPE},
+			</if>
+			<if test="SAYTEXT != null">
+				#{SAYTEXT},
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				#{PIC_MEDIA_ID},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="IT_NAME != null">
+				#{IT_NAME},
+			</if>
+			<if test="IT_GROUP_ID != null">
+				#{IT_GROUP_ID},
+			</if>
+			<if test="IT_CREATE_TIME != null">
+				#{IT_CREATE_TIME},
+			</if>
+			<if test="IT_PIC_URL != null">
+				#{IT_PIC_URL},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="map">
+		UPDATE WX_ATTENTION_REPLY
+		<set>
+			<if test="PUBLISH != null">
+				PUBLISH = #{PUBLISH},
+			</if>
+			<if test="TYPE != null">
+				TYPE = #{TYPE},
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT = #{SAYTEXT},
+			</if>
+			<if test="PIC_MEDIA_ID != null">
+				PIC_MEDIA_ID = #{PIC_MEDIA_ID},
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID = #{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+			<if test="IT_NAME != null">
+				IT_NAME = #{IT_NAME},
+			</if>
+			<if test="IT_GROUP_ID != null">
+				IT_GROUP_ID = #{IT_GROUP_ID},
+			</if>
+			<if test="IT_CREATE_TIME != null">
+				IT_CREATE_TIME = #{IT_CREATE_TIME},
+			</if>
+			<if test="IT_PIC_URL != null">
+				IT_PIC_URL = #{IT_PIC_URL},
+			</if>
+		</set>
+		WHERE ATTENTION_REPLY_ID = #{ATTENTION_REPLY_ID}
+	</update>
+	<update id="deleteAttentionReply" parameterType="map">
+		UPDATE WX_ATTENTION_REPLY
+		<set>
+			PUBLISH = '0',
+
+		</set>
+		WHERE GZH_ID = #{GZH_ID}
+	</update>
+
+</mapper>

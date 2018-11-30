@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="HmBtSpace">
+	<sql id="Base_Column_List">
+		BT_ID,NAME,URL,PIC_ID,PIC_URL,DESCRIPTION,CREATE_TIME,PUBLISH,GZH_ID,RANK
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_HOME_BUTTON
+		WHERE BT_ID = #{BT_ID}
+	</select>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_HOME_BUTTON
+		WHERE GZH_ID = #{GZH_ID}
+		AND PUBLISH = 'on'
+		ORDER BY (RANK+0)
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_HOME_BUTTON
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.NAME != null" >
+      	AND NAME LIKE concat('%', #{t.NAME}, '%')
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_HOME_BUTTON
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="BT_ID != null">
+				BT_ID,
+			</if>
+			<if test="NAME != null">
+				NAME,
+			</if>
+			<if test="URL != null">
+				URL,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="BT_ID != null">
+				#{BT_ID},
+			</if>
+			<if test="NAME != null">
+				#{NAME},
+			</if>
+			<if test="URL != null">
+				#{URL},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="DESCRIPTION != null">
+				#{DESCRIPTION},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+		</trim>
+	</insert>
+	<delete id="delete" parameterType="string">
+		DELETE FROM STORE_HOME_BUTTON
+		WHERE BT_ID = #{BT_ID}
+	</delete>
+	
+	<update id="update" parameterType="map">
+		UPDATE STORE_HOME_BUTTON
+		<set>
+			<if test="URL != null">
+				URL = #{URL},
+			</if>
+			<if test="NAME != null">
+				NAME = #{NAME},
+			</if>
+			<if test="RANK != null">
+				RANK = #{RANK},
+			</if>
+			<if test="DESCRIPTION != null">
+				DESCRIPTION = #{DESCRIPTION},
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL = #{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID=#{PIC_ID},
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH=#{PUBLISH},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+		</set>
+		WHERE BT_ID = #{BT_ID}
+	</update>
+</mapper>

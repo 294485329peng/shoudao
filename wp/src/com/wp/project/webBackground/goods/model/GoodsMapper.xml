@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goodsSpace">
+	<sql id="Base_Column_List_goods">
+		GOODS_ID,GZH_ID,PIC_URL_ID1,PIC_URL1,PIC_URL_ID2,PIC_URL2,PIC_URL_ID3,PIC_URL3,
+		GOODS_NAME,INTRODUCTION,TRANSPORTATION_INFO,TRANSPORTATION_PICE,SHOW_PRICE,SHOW_POINT,PROMOTION_PRICE,VIP_PRICE,
+		DETAIL,CLASSIFY1,CLASSIFY2,CLASSIFY3,RANK,GROUP_ID,CREATE_TIME,PUBLISH
+	</sql>
+	<sql id="Base_Column_List_goodsDetail">
+		GOODS_DETAIL_ID,GZH_ID,GOODS_DETAIL_NAME,ART_NO,INVENTORY,
+		PRICE,POINT,PROMOTION_PRICE,VIP_PRICE,MAIN,
+		MAIN_SPECIFICATION_ID,MAIN_SPECIFICATION,CHILD_SPECIFICATION,GOODS_ID,IS_USE,RANK,CREATE_TIME
+	</sql>
+	<select id="getGoods" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_goods" />
+		FROM STORE_GOODS
+		WHERE GOODS_ID = #{GOODS_ID}
+	</select>
+	<select id="classqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_goods" />
+		FROM STORE_GOODS
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.GOODS_NAME != null" >
+      	AND CLASSIFY1 = #{t.CLASSIFY1} 
+      	</if>
+		ORDER BY (RANK-0) ASC
+	</select>
+	<select id="rankqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_goods" />
+		FROM STORE_GOODS
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.GOODS_NAME != null" >
+      	AND GOODS_NAME LIKE concat('%', #{t.GOODS_NAME}, '%')
+    	</if>
+    	<if test="t.CLASSIFY1 != null" >
+      	AND CLASSIFY1 = #{t.CLASSIFY1} 
+      	</if>
+		ORDER BY (RANK-0) ASC
+	</select>
+	
+	<insert id="insertGoods" parameterType="map">
+		INSERT INTO STORE_GOODS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="GOODS_ID != null">
+				GOODS_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="PIC_URL_ID1 != null">
+				PIC_URL_ID1,
+			</if>
+			<if test="PIC_URL1 != null">
+				PIC_URL1,
+			</if>
+			<if test="PIC_URL_ID2 != null">
+				PIC_URL_ID2,
+			</if>
+			<if test="PIC_URL2 != null">
+				PIC_URL2,
+			</if>
+			<if test="PIC_URL_ID3 != null">
+				PIC_URL_ID3,
+			</if>
+			<if test="PIC_URL3 != null">
+				PIC_URL3,
+			</if>
+			<if test="GOODS_NAME != null">
+				GOODS_NAME,
+			</if>
+			<if test="INTRODUCTION != null">
+				INTRODUCTION,
+			</if>
+			<if test="TRANSPORTATION_INFO != null">
+				TRANSPORTATION_INFO,
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				TRANSPORTATION_PICE,
+			</if>
+			<if test="SHOW_PRICE != null">
+				SHOW_PRICE,
+			</if>
+			<if test="SHOW_POINT != null">
+				SHOW_POINT,
+			</if>
+			<if test="PROMOTION_PRICE != null">
+				PROMOTION_PRICE,
+			</if>
+			<if test="VIP_PRICE != null">
+				VIP_PRICE,
+			</if>
+			<if test="DETAIL != null">
+				DETAIL,
+			</if>
+			<if test="CLASSIFY1 != null">
+				CLASSIFY1,
+			</if>
+			<if test="CLASSIFY2 != null">
+				CLASSIFY2,
+			</if>
+			<if test="CLASSIFY3 != null">
+				CLASSIFY3,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="GOODS_ID != null">
+				#{GOODS_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="PIC_URL_ID1 != null">
+				#{PIC_URL_ID1},
+			</if>
+			<if test="PIC_URL1 != null">
+				#{PIC_URL1},
+			</if>
+			<if test="PIC_URL_ID2 != null">
+				#{PIC_URL_ID2},
+			</if>
+			<if test="PIC_URL2 != null">
+				#{PIC_URL2},
+			</if>
+			<if test="PIC_URL_ID3 != null">
+				#{PIC_URL_ID3},
+			</if>
+			<if test="PIC_URL3 != null">
+				#{PIC_URL3},
+			</if>
+			<if test="GOODS_NAME != null">
+				#{GOODS_NAME},
+			</if>
+			<if test="INTRODUCTION != null">
+				#{INTRODUCTION},
+			</if>
+			<if test="TRANSPORTATION_INFO != null">
+				#{TRANSPORTATION_INFO},
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				#{TRANSPORTATION_PICE},
+			</if>
+			<if test="SHOW_PRICE != null">
+				#{SHOW_PRICE},
+			</if>
+			<if test="SHOW_POINT != null">
+				#{SHOW_POINT},
+			</if>
+			<if test="PROMOTION_PRICE != null">
+				#{PROMOTION_PRICE},
+			</if>
+			<if test="VIP_PRICE != null">
+				#{VIP_PRICE},
+			</if>
+			<if test="DETAIL != null">
+				#{DETAIL},
+			</if>
+			<if test="CLASSIFY1 != null">
+				#{CLASSIFY1},
+			</if>
+			<if test="CLASSIFY2 != null">
+				#{CLASSIFY2},
+			</if>
+			<if test="CLASSIFY3 != null">
+				#{CLASSIFY3},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="GROUP_ID != null">
+				#{GROUP_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="PUBLISH != null">
+				#{PUBLISH},
+			</if>
+		</trim>
+	</insert> 
+	
+	<delete id="deleteGoods" parameterType="string">
+		DELETE FROM STORE_GOODS
+		WHERE  GOODS_ID = #{GOODS_ID}
+		
+	</delete>
+	<select id="goodsTimequeryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List_goods" />
+		FROM STORE_GOODS
+		WHERE GZH_ID = #{t.GZH_ID}
+		
+		ORDER BY CREATE_TIME DESC
+	</select>
+
+	<update id="updateGoods" parameterType="map">
+		UPDATE STORE_GOODS
+		<set>
+			<if test="PIC_URL_ID1 != null">
+				PIC_URL_ID1 = #{PIC_URL_ID1},
+			</if>
+			<if test="PIC_URL1 != null">
+				PIC_URL1 = #{PIC_URL1},
+			</if>
+			<if test="PIC_URL_ID2 != null">
+				PIC_URL_ID2 = #{PIC_URL_ID2},
+			</if>
+			<if test="PIC_URL2 != null">
+				PIC_URL2 = #{PIC_URL2},
+			</if>
+			<if test="PIC_URL_ID3 != null">
+				PIC_URL_ID3 = #{PIC_URL_ID3},
+			</if>
+			<if test="PIC_URL3 != null">
+				PIC_URL3 = #{PIC_URL3},
+			</if>
+			<if test="GOODS_NAME != null">
+				GOODS_NAME = #{GOODS_NAME},
+			</if>
+			<if test="INTRODUCTION != null">
+				INTRODUCTION = #{INTRODUCTION},
+			</if>
+			<if test="TRANSPORTATION_INFO != null">
+				TRANSPORTATION_INFO = #{TRANSPORTATION_INFO},
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				TRANSPORTATION_PICE = #{TRANSPORTATION_PICE},
+			</if>
+			<if test="SHOW_PRICE != null">
+				SHOW_PRICE = #{SHOW_PRICE},
+			</if>
+			<if test="SHOW_POINT != null">
+				SHOW_POINT = #{SHOW_POINT},
+			</if>
+			<if test="PROMOTION_PRICE != null">
+				PROMOTION_PRICE = #{PROMOTION_PRICE},
+			</if>
+			<if test="VIP_PRICE != null">
+				VIP_PRICE = #{VIP_PRICE},
+			</if>
+			<if test="DETAIL != null">
+				DETAIL = #{DETAIL},
+			</if>
+			<if test="CLASSIFY1 != null">
+				CLASSIFY1 = #{CLASSIFY1},
+			</if>
+			<if test="CLASSIFY2 != null">
+				CLASSIFY2 = #{CLASSIFY2},
+			</if>
+			<if test="CLASSIFY3 != null">
+				CLASSIFY3 = #{CLASSIFY3},
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID = #{GROUP_ID},
+			</if>
+			<if test="PUBLISH != null">
+				PUBLISH=#{PUBLISH},
+			</if>
+			<if test="RANK != null">
+				RANK=#{RANK},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+		</set>
+		WHERE GOODS_ID = #{GOODS_ID}
+	</update>
+	<update id="batchUpdateRank"  parameterType="java.util.List">
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                UPDATE STORE_GOODS 
+                <set>
+                	<if test="item.RANK!=null">
+                          RANK = ${item.RANK}
+                    </if>          
+                </set>
+                WHERE  GOODS_ID = #{item.GOODS_ID}
+         </foreach>
+    </update>
+    
+    <!--goodsDetail 的增删改查  -->
+    <update id="updateGoodsDetailIsUse" parameterType="map">
+		UPDATE STORE_GOODS_DETAIL
+		<set>
+			IS_USE = #{IS_USE}
+		</set>
+		WHERE GOODS_ID = #{GOODS_ID}
+	</update>
+    <insert id="batchInsertGoodsDetail" parameterType="java.util.List">
+    INSERT INTO STORE_GOODS_DETAIL (<include refid="Base_Column_List_goodsDetail" />)
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.goods_detail_id,jdbcType=VARCHAR},
+        #{item.gzh_id,jdbcType=VARCHAR},
+        #{item.goods_detail_name,jdbcType=VARCHAR},
+        #{item.art_no,jdbcType=VARCHAR},
+        #{item.inventory,jdbcType=VARCHAR},
+        #{item.price,jdbcType=VARCHAR},
+        #{item.point,jdbcType=VARCHAR},
+        #{item.promotion_price,jdbcType=VARCHAR},
+        #{item.vip_price,jdbcType=VARCHAR},
+        #{item.main,jdbcType=VARCHAR},
+        #{item.main_specification_id,jdbcType=VARCHAR},
+        #{item.main_specification,jdbcType=VARCHAR},
+        #{item.child_specification,jdbcType=VARCHAR},
+        #{item.goods_id,jdbcType=VARCHAR},
+        #{item.is_use,jdbcType=VARCHAR},
+        #{item.rank,jdbcType=VARCHAR},
+        #{item.create_time,jdbcType=VARCHAR})
+    </foreach>
+	</insert>	
+    
+    <insert id="insertGoodsDetail" parameterType="map">
+		INSERT INTO STORE_GOODS_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="GOODS_DETAIL_ID != null">
+				GOODS_DETAIL_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="GOODS_DETAIL_NAME != null">
+				GOODS_DETAIL_NAME,
+			</if>
+			<if test="ART_NO != null">
+				ART_NO,
+			</if>
+			<if test="INVENTORY != null">
+				INVENTORY,
+			</if>
+			<if test="PRICE != null">
+				PRICE,
+			</if>
+			<if test="POINT != null">
+				POINT,
+			</if>
+			<if test="PROMOTION_PRICE != null">
+				PROMOTION_PRICE,
+			</if>
+			<if test="VIP_PRICE != null">
+				VIP_PRICE,
+			</if>
+			<if test="MAIN != null">
+				MAIN,
+			</if>
+			<if test="MAIN_SPECIFICATION_ID != null">
+				MAIN_SPECIFICATION_ID,
+			</if>
+			<if test="MAIN_SPECIFICATION != null">
+				MAIN_SPECIFICATION,
+			</if>
+			<if test="CHILD_SPECIFICATION != null">
+				CHILD_SPECIFICATION,
+			</if>
+			<if test="GOODS_ID != null">
+				GOODS_ID,
+			</if>
+			<if test="IS_USE != null">
+				IS_USE,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="GOODS_DETAIL_ID != null">
+				#{GOODS_DETAIL_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="GOODS_DETAIL_NAME != null">
+				#{GOODS_DETAIL_NAME},
+			</if>
+			<if test="ART_NO != null">
+				#{ART_NO},
+			</if>
+			<if test="INVENTORY != null">
+				#{INVENTORY},
+			</if>
+			<if test="PRICE != null">
+				#{PRICE},
+			</if>
+			<if test="POINT != null">
+				#{POINT},
+			</if>
+			<if test="PROMOTION_PRICE != null">
+				#{PROMOTION_PRICE},
+			</if>
+			<if test="VIP_PRICE != null">
+				#{VIP_PRICE},
+			</if>
+			<if test="MAIN != null">
+				#{MAIN},
+			</if>
+			<if test="MAIN_SPECIFICATION_ID != null">
+				#{MAIN_SPECIFICATION_ID},
+			</if>
+			<if test="MAIN_SPECIFICATION != null">
+				#{MAIN_SPECIFICATION},
+			</if>
+			<if test="CHILD_SPECIFICATION != null">
+				#{CHILD_SPECIFICATION},
+			</if>
+			<if test="GOODS_ID != null">
+				#{GOODS_ID},
+			</if>
+			<if test="IS_USE != null">
+				#{IS_USE},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+		</trim>
+	</insert>
+	<select id="queryGoodsDetail" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_goodsDetail" />
+		FROM STORE_GOODS_DETAIL
+		WHERE MAIN_SPECIFICATION_ID = #{MAIN_SPECIFICATION_ID}
+	</select>
+	<select id="queryGoodsDetailMainList" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_goodsDetail" />
+		FROM STORE_GOODS_DETAIL
+		WHERE GOODS_ID = #{GOODS_ID}
+			AND MAIN = '1'
+	</select>
+	<select id="getGoodsDetail" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_goodsDetail" />
+		FROM STORE_GOODS_DETAIL
+		WHERE GOODS_DETAIL_ID = #{GOODS_DETAIL_ID}
+	</select>
+	<update id="updateGoodsDetail" parameterType="map">
+		UPDATE STORE_GOODS_DETAIIL
+		<set>
+			<if test="GOODS_DETAIL_NAME != null">
+				GOODS_DETAIL_NAME = #{GOODS_DETAIL_NAME},
+			</if>
+			<if test="ART_NO != null">
+				ART_NO = #{ART_NO},
+			</if>
+			<if test="INVENTORY != null">
+				INVENTORY = #{INVENTORY},
+			</if>
+			<if test="PRICE != null">
+				PRICE = #{PRICE},
+			</if>
+			<if test="POINT != null">
+				POINT = #{POINT},
+			</if>
+			<if test="PROMOTION_PRICE != null">
+				PROMOTION_PRICE = #{PROMOTION_PRICE},
+			</if>
+			<if test="VIP_PRICE != null">
+				VIP_PRICE = #{VIP_PRICE},
+			</if>
+			<if test="MAIN != null">
+				MAIN = #{MAIN},
+			</if>
+			<if test="MAIN_SPECIFICATION_ID != null">
+				MAIN_SPECIFICATION_ID = #{MAIN_SPECIFICATION_ID},
+			</if>
+			<if test="MAIN_SPECIFICATION != null">
+				MAIN_SPECIFICATION = #{MAIN_SPECIFICATION},
+			</if>
+			<if test="CHILD_SPECIFICATION != null">
+				CHILD_SPECIFICATION = #{CHILD_SPECIFICATION},
+			</if>
+			<if test="GOODS_ID != null">
+				GOODS_ID = #{GOODS_ID},
+			</if>
+			<if test="RANK != null">
+				RANK = #{RANK},
+			</if>
+			<if test="IS_USE != null">
+				IS_USE = #{IS_USE},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME = #{CREATE_TIME},
+			</if>
+		</set>
+		WHERE GOODS_DETAIL_ID = #{GOODS_DETAIL_ID}
+	</update>
+	<update id="batchUpdateGoodsDetail" parameterType="java.util.List">
+	<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+		UPDATE STORE_GOODS_DETAIIL
+		<set>
+			<if test="item.GOODS_DETAIL_NAME != null">
+				GOODS_DETAIL_NAME = #{item.GOODS_DETAIL_NAME},
+			</if>
+			<if test="item.ART_NO != null">
+				ART_NO = #{item.item.ART_NO},
+			</if>
+			<if test="item.INVENTORY != null">
+				INVENTORY = #{item.INVENTORY},
+			</if>
+			<if test="item.PRICE != null">
+				PRICE = #{item.PRICE},
+			</if>
+			<if test="item.POINT != null">
+				POINT = #{item.POINT},
+			</if>
+			<if test="item.PROMOTION_PRICE != null">
+				PROMOTION_PRICE = #{item.PROMOTION_PRICE},
+			</if>
+			<if test="item.VIP_PRICE != null">
+				VIP_PRICE = #{item.VIP_PRICE},
+			</if>
+			<if test="item.MAIN != null">
+				MAIN = #{item.MAIN},
+			</if>
+			<if test="item.MAIN_SPECIFICATION_ID != null">
+				MAIN_SPECIFICATION_ID = #{item.MAIN_SPECIFICATION_ID},
+			</if>
+			<if test="item.MAIN_SPECIFICATION != null">
+				MAIN_SPECIFICATION = #{item.MAIN_SPECIFICATION},
+			</if>
+			<if test="item.CHILD_SPECIFICATION != null">
+				CHILD_SPECIFICATION = #{item.CHILD_SPECIFICATION},
+			</if>
+			<if test="item.GOODS_ID != null">
+				GOODS_ID = #{item.GOODS_ID},
+			</if>
+			<if test="item.RANK != null">
+				RANK = #{item.RANK},
+			</if>
+			<if test="item.IS_USE != null">
+				IS_USE = #{item.IS_USE},
+			</if>
+			<if test="item.CREATE_TIME != null">
+				CREATE_TIME = #{item.CREATE_TIME},
+			</if>
+		</set>
+		WHERE GOODS_DETAIL_ID = #{item.GOODS_DETAIL_ID}
+		</foreach>
+	</update>
+	<delete id="deleteGoodsDetialId" parameterType="string">
+		DELETE FROM STORE_GOODS_DETAIL
+		WHERE  GOODS_DETAIL_ID = #{GOODS_DETAIL_ID}
+	</delete>
+	<delete id="deleteGoodsDetialMainSpecId" parameterType="string">
+		DELETE FROM STORE_GOODS_DETAIL
+		WHERE  MAIN_SPECIFICATION_ID = #{MAIN_SPECIFICATION_ID}
+	</delete>
+	<delete id="deleteGroupGoodsDetial" parameterType="string">
+		DELETE FROM STORE_GOODS_DETAIL
+		WHERE  GOODS_ID = #{GOODS_ID}
+	</delete>
+</mapper>

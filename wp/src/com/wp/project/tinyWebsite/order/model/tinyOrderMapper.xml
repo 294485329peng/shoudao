@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tinyOrderSpace">
+	<sql id="Base_Column_List_OrderGoods">
+		ORDER_GOODS_ID,GOODS_DETAIL_ID,GOODS_NAME,PIC_URL,UNIT_PRICE,
+		MAIN_SPECIFICATION,CHILD_SPECIFICATION,AMOUNT,TOTAL_PRICE,TOTAL_POINT,ORDER_ID,GOODS_ID
+	</sql>
+	<!-- <select id="get" resultType="map" parameterType="map"> SELECT * FROM 
+		STORE_ORDER WHERE ORDER_ID = #{ORDER_ID} AND DEAL_TYPE = '30' </select> -->
+	<insert id="insertOrderGoods" parameterType="map">
+		INSERT INTO STORE_ORDER_GOODS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ORDER_GOODS_ID != null">
+				ORDER_GOODS_ID,
+			</if>
+			<if test="GOODS_DETAIL_ID != null">
+				GOODS_DETAIL_ID,
+			</if>
+			<if test="GOODS_NAME != null">
+				GOODS_NAME,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="UNIT_PRICE != null">
+				UNIT_PRICE,
+			</if>
+			<if test="MAIN_SPECIFICATION != null">
+				MAIN_SPECIFICATION,
+			</if>
+			<if test="CHILD_SPECIFICATION != null">
+				CHILD_SPECIFICATION,
+			</if>
+			<if test="AMOUNT != null">
+				AMOUNT,
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE,
+			</if>
+			<if test="ORDER_ID != null">
+				ORDER_ID,
+			</if>
+			<if test="GOODS_ID != null">
+				GOODS_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ORDER_GOODS_ID != null">
+				#{ORDER_GOODS_ID},
+			</if>
+			<if test="GOODS_DETAIL_ID != null">
+				#{GOODS_DETAIL_ID},
+			</if>
+			<if test="GOODS_NAME != null">
+				#{GOODS_NAME},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="UNIT_PRICE != null">
+				#{UNIT_PRICE},
+			</if>
+			<if test="MAIN_SPECIFICATION != null">
+				#{MAIN_SPECIFICATION},
+			</if>
+			<if test="CHILD_SPECIFICATION != null">
+				#{CHILD_SPECIFICATION},
+			</if>
+			<if test="AMOUNT != null">
+				#{AMOUNT},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				#{TOTAL_PRICE},
+			</if>
+			<if test="ORDER_ID != null">
+				#{ORDER_ID},
+			</if>
+			<if test="GOODS_ID != null">
+				#{GOODS_ID},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="batchInsertOrderGoods" parameterType="java.util.List">
+		INSERT INTO STORE_ORDER_GOODS (
+		<include refid="Base_Column_List_OrderGoods" />
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.order_goods_id,jdbcType=VARCHAR},
+			#{item.goods_detail_id,jdbcType=VARCHAR},
+			#{item.goods_name,jdbcType=VARCHAR},
+			#{item.pic_url,jdbcType=VARCHAR},
+			#{item.unit_price,jdbcType=VARCHAR},
+			#{item.main_specification,jdbcType=VARCHAR},
+			#{item.child_specification,jdbcType=VARCHAR},
+			#{item.amount,jdbcType=VARCHAR},
+			#{item.total_price,jdbcType=VARCHAR},
+			#{item.total_point,jdbcType=VARCHAR},
+			#{item.order_id,jdbcType=VARCHAR},
+			#{item.goods_id,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+	<insert id="insertOrder" parameterType="map">
+		INSERT INTO STORE_ORDER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ORDER_ID != null">
+				ORDER_ID,
+			</if>
+			<if test="OPEN_ID != null">
+				OPEN_ID,
+			</if>
+			<if test="MEMBER_ID != null">
+				MEMBER_ID,
+			</if>
+			<if test="CUSTOMER_NAME != null">
+				CUSTOMER_NAME,
+			</if>
+			<if test="CITY != null">
+				CITY,
+			</if>
+			<if test="ORDER_PHONE != null">
+				ORDER_PHONE,
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE,
+			</if>
+			<if test="TOTAL_POINT != null">
+				TOTAL_POINT,
+			</if>
+			<if test="IS_PAY != null">
+				IS_PAY,
+			</if>
+			<if test="PAY_TYPE != null">
+				PAY_TYPE,
+			</if>
+			<if test="PAY_TIME != null">
+				PAY_TIME,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="DEAL_TIME != null">
+				DEAL_TIME,
+			</if>
+			<if test="DEAL_TYPE != null">
+				DEAL_TYPE,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="STORE_ID != null">
+				STORE_ID,
+			</if>
+			<if test="CONSIGNEE != null">
+				CONSIGNEE,
+			</if>
+			<if test="ADDRESS != null">
+				ADDRESS,
+			</if>
+			<if test="ADDRESS_PHONE != null">
+				ADDRESS_PHONE,
+			</if>
+			<if test="BUYER_LEAVE_MESSAGE != null">
+				BUYER_LEAVE_MESSAGE,
+			</if>
+			<if test="MAIL_NUMBER != null">
+				MAIL_NUMBER,
+			</if>
+			<if test="MAIL_COMPANY != null">
+				MAIL_COMPANY,
+			</if>
+			<if test="SELLER_LEAVE_MESSAGE != null">
+				SELLER_LEAVE_MESSAGE,
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				TRANSPORTATION_PICE,
+			</if>
+			<if test="DELIVER_TIME != null">
+				DELIVER_TIME,
+			</if>
+			<if test="FINISH_TIME != null">
+				FINISH_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ORDER_ID != null">
+				#{ORDER_ID},
+			</if>
+			<if test="OPEN_ID != null">
+				#{OPEN_ID},
+			</if>
+			<if test="MEMBER_ID != null">
+				#{MEMBER_ID},
+			</if>
+			<if test="CUSTOMER_NAME != null">
+				#{CUSTOMER_NAME},
+			</if>
+			<if test="CITY != null">
+				#{CITY},
+			</if>
+			<if test="ORDER_PHONE != null">
+				#{ORDER_PHONE},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				#{TOTAL_PRICE},
+			</if>
+			<if test="TOTAL_POINT != null">
+				#{TOTAL_POINT},
+			</if>
+			<if test="IS_PAY != null">
+				#{IS_PAY},
+			</if>
+			<if test="PAY_TYPE != null">
+				#{PAY_TYPE},
+			</if>
+			<if test="PAY_TIME != null">
+				#{PAY_TIME},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="DEAL_TIME != null">
+				#{DEAL_TIME},
+			</if>
+			<if test="DEAL_TYPE != null">
+				#{DEAL_TYPE},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="STORE_ID != null">
+				#{STORE_ID},
+			</if>
+			<if test="CONSIGNEE != null">
+				#{CONSIGNEE},
+			</if>
+			<if test="ADDRESS != null">
+				#{ADDRESS},
+			</if>
+			<if test="ADDRESS_PHONE != null">
+				#{ADDRESS_PHONE},
+			</if>
+			<if test="BUYER_LEAVE_MESSAGE != null">
+				#{BUYER_LEAVE_MESSAGE},
+			</if>
+			<if test="MAIL_NUMBER != null">
+				#{MAIL_NUMBER},
+			</if>
+			<if test="MAIL_COMPANY != null">
+				#{MAIL_COMPANY},
+			</if>
+			<if test="SELLER_LEAVE_MESSAGE != null">
+				#{SELLER_LEAVE_MESSAGE},
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				#{TRANSPORTATION_PICE},
+			</if>
+			<if test="DELIVER_TIME != null">
+				#{DELIVER_TIME},
+			</if>
+			<if test="FINISH_TIME != null">
+				#{FINISH_TIME},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateOrder" parameterType="map">
+		UPDATE STORE_ORDER
+		<set>
+			<if test="CUSTOMER_NAME != null">
+				CUSTOMER_NAME = #{CUSTOMER_NAME},
+			</if>
+			<if test="CITY != null">
+				CITY = #{CITY},
+			</if>
+			<if test="ORDER_PHONE != null">
+				ORDER_PHONE = #{ORDER_PHONE},
+			</if>
+			<if test="CONSIGNEE != null">
+				CONSIGNEE = #{CONSIGNEE},
+			</if>
+			<if test="ADDRESS != null">
+				ADDRESS = #{ADDRESS},
+			</if>
+			<if test="ADDRESS_PHONE != null">
+				ADDRESS_PHONE = #{ADDRESS_PHONE},
+			</if>
+			<if test="BUYER_LEAVE_MESSAGE != null">
+				BUYER_LEAVE_MESSAGE = #{BUYER_LEAVE_MESSAGE},
+			</if>
+			<if test="FINISH_TIME != null">
+				FINISH_TIME=#{FINISH_TIME},
+			</if>
+			<if test="DEAL_TYPE != null">
+				DEAL_TYPE=#{DEAL_TYPE},
+			</if>
+			<if test="IS_PAY != null">
+				IS_PAY=#{IS_PAY},
+			</if>
+			<if test="PAY_TYPE != null">
+				PAY_TYPE=#{PAY_TYPE},
+			</if>
+			<if test="PAY_TIME != null">
+				PAY_TIME=#{PAY_TIME},
+			</if>
+		</set>
+		WHERE ORDER_ID = #{ORDER_ID}
+	</update>
+	<update id="enterOrder" parameterType="map">
+		UPDATE STORE_ORDER
+		<set>
+			<if test="DEAL_TYPE != null">
+				DEAL_TYPE = #{DEAL_TYPE},
+			</if>
+		</set>
+		WHERE ORDER_ID = #{ORDER_ID}
+	</update>
+	<update id="cancelOrder" parameterType="map">
+		UPDATE STORE_ORDER
+		<set>
+			<if test="DEAL_TYPE != null">
+				DEAL_TYPE = #{DEAL_TYPE},
+			</if>
+		</set>
+		WHERE ORDER_ID = #{ORDER_ID}
+	</update>
+	<select id="getOrder" resultType="map" parameterType="map">
+		SELECT
+		*
+		FROM STORE_ORDER
+		WHERE ORDER_ID = #{ORDER_ID}
+	</select>
+</mapper>

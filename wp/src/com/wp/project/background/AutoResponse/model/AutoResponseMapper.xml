@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="autoResponseSpace">
+	<sql id="Base_Column_List">
+		RULE_ID,RULE_NAME,KEYWORD_LIST,REPLY_TYPE,ENABLED,
+		IT_ID,IT_TITLE,IT_GROUP_ID,SAYTEXT,GZH_ID,CREATE_TIME,MATCHTYPE
+	</sql>
+	<sql id="Base_Column_List_KeyWord">
+		KEYWORD_ID,RULE_ID,KEYWORD,MATCHTYPE,GZH_ID,CREATE_TIME
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_KEYWORD_RULE
+		WHERE RULE_ID = #{RULE_ID}
+	</select>
+	<select id="getKeyWord" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List_KeyWord" />
+		FROM WX_KEYWORD
+		WHERE GZH_ID = #{GZH_ID}
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="query" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_KEYWORD_RULE
+		WHERE RULE_ID = #{RULE_ID}
+	</select>
+	<select id="queryPageList" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_KEYWORD_RULE
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.RULE_NAME != null" >
+      	AND RULE_NAME LIKE concat('%', #{t.RULE_NAME}, '%')
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<insert id="insert" parameterType="map">
+		INSERT INTO WX_KEYWORD_RULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="RULE_ID != null">
+				RULE_ID,
+			</if>
+			<if test="RULE_NAME != null">
+				RULE_NAME,
+			</if>
+			<if test="KEYWORD_LIST != null">
+				KEYWORD_LIST,
+			</if>
+			<if test="REPLY_TYPE != null">
+				REPLY_TYPE,
+			</if>
+			<if test="ENABLED != null">
+				ENABLED,
+			</if>
+			<if test="IT_ID != null">
+				IT_ID,
+			</if>
+			<if test="IT_TITLE != null">
+				IT_TITLE,
+			</if>
+			<if test="IT_GROUP_ID != null">
+				IT_GROUP_ID,
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="MATCHTYPE != null">
+				MATCHTYPE
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="RULE_ID != null">
+				#{RULE_ID},
+			</if>
+			<if test="RULE_NAME != null">
+				#{RULE_NAME},
+			</if>
+			<if test="KEYWORD_LIST != null">
+				#{KEYWORD_LIST},
+			</if>
+			<if test="REPLY_TYPE != null">
+				#{REPLY_TYPE},
+			</if>
+			<if test="ENABLED != null">
+				#{ENABLED},
+			</if>
+			<if test="IT_ID != null">
+				#{IT_ID},
+			</if>
+			<if test="IT_TITLE != null">
+				#{IT_TITLE},
+			</if>
+			<if test="IT_GROUP_ID != null">
+				#{IT_GROUP_ID},
+			</if>
+			<if test="SAYTEXT != null">
+				#{SAYTEXT},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="MATCHTYPE != null">
+				#{MATCHTYPE}
+			</if>
+		</trim>
+	</insert>
+	<insert id="insert_key" parameterType="java.util.List">
+		INSERT INTO WX_KEYWORD
+		(KEYWORD_ID,RULE_ID,KEYWORD,MATCHTYPE,GZH_ID,CREATE_TIME)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.KEYWORD_ID},#{item.RULE_ID},#{item.KEYWORD},#{item.MATCHTYPE},#{item.GZH_ID},#{item.CREATE_TIME})
+		</foreach>
+	</insert>
+	<delete id="delete" parameterType="string">
+		DELETE FROM WX_KEYWORD_RULE
+		WHERE
+		RULE_ID = #{RULE_ID}
+	</delete>
+	<delete id="deleteKeyword" parameterType="string">
+		DELETE FROM WX_KEYWORD
+		WHERE
+		RULE_ID = #{RULE_ID}
+	</delete>
+	<update id="update" parameterType="map">
+		UPDATE WX_KEYWORD_RULE
+		<set>
+			<if test="RULE_NAME != null">
+				RULE_NAME = #{RULE_NAME},
+			</if>
+			<if test="KEYWORD_LIST != null">
+				KEYWORD_LIST=#{KEYWORD_LIST},
+			</if>
+			<if test="REPLY_TYPE != null">
+				REPLY_TYPE=#{REPLY_TYPE},
+			</if>
+			<if test="ENABLED != null">
+				ENABLED=#{ENABLED},
+			</if>
+			<if test="IT_ID != null">
+				IT_ID=#{IT_ID},
+			</if>
+			<if test="IT_TITLE != null">
+				IT_TITLE=#{IT_TITLE},
+			</if>
+			<if test="IT_GROUP_ID != null">
+				IT_GROUP_ID=#{IT_GROUP_ID},
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT=#{SAYTEXT},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+			<if test="MATCHTYPE != null">
+				MATCHTYPE=#{MATCHTYPE}
+			</if>
+		</set>
+		WHERE RULE_ID = #{RULE_ID}
+	</update>
+</mapper>

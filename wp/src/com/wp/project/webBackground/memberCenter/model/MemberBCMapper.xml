@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberBCSpace">
+	<sql id="Base_Column_List">
+		OPEN_ID,GZH_ID,NICKNAME,SEX, CITY,COUNTRY,PROVINCE,LANGUAGE,HEADIMGURL,SUBSCRIBE_TIME,UNION_ID,REMARK,GROUP_ID,CREATE_TIME,SUBSCRIBE,CANCEL_TIME,
+		LAST_TIME,REAL_NAME,AGE,DEGREE,STORE_GROUP_ID,IDENTITY_CARD,PHONE,MONEY,POINT,BIRTHDAY,ALL_ORDER_COUNT,FINISH_ORDER_COUNT,VOLUME_SALES,ATTESTATION,
+		LOGIN_NAME,LOGIN_PASSWORD,MEMBER_ID,DELETE_MEMBER,STORE_REMARK,USER_TYPE
+	 
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_USER
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+	<select id="getByMemberId" resultType="map" parameterType="map">
+		SELECT
+		OPEN_ID AS customer,GZH_ID AS store,LOGIN_NAME AS member,DEGREE AS degree,LOGIN_PASSWORD,USER_TYPE AS userType
+		FROM STORE_USER
+		WHERE LOGIN_NAME = #{LOGIN_NAME}
+	</select>
+	<select id="getByOpenIdGzh" resultType="map" parameterType="map">
+		SELECT
+		OPEN_ID AS customer,GZH_ID AS store,LOGIN_NAME AS member,DEGREE AS degree,LOGIN_PASSWORD,USER_TYPE AS userType
+		FROM STORE_USER
+		WHERE OPEN_ID = #{OPEN_ID}
+		AND GZH_ID = #{GZH_ID}
+	</select>
+	<select id="getOrderMemb" resultType="map" parameterType="string">
+		SELECT
+		OPEN_ID,NICKNAME,REAL_NAME,DEGREE,CITY,MEMBER_ID,PHONE,ATTESTATION
+		FROM STORE_USER
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+	<select id="subscribequeryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_USER
+		WHERE GZH_ID = #{t.GZH_ID}
+		
+			AND SUBSCRIBE = #{t.SUBSCRIBE}
+		
+		ORDER BY CREATE_TIME DESC
+	</select>
+	
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		u.* ,c.CARD_ID
+		FROM STORE_USER u LEFT JOIN WX_USER_CARD c 
+		ON  c.OPEN_ID = u.OPEN_ID
+		WHERE  u.GZH_ID = #{t.GZH_ID}
+		AND  u.DELETE_MEMBER = '1'
+		<if test="t.NICKNAME != null" >
+      	AND NICKNAME LIKE concat('%', #{t.NICKNAME}, '%')
+    	</if>
+    	<if test="t.CARD_ID != null" >
+      	AND c.CARD_ID = #{t.CARD_ID}
+    	</if>
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="getCardNumber" resultType="map" parameterType="string">
+		SELECT
+		*
+		FROM WX_USER_CARD
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+	<insert id="insertCard" parameterType="string">
+	INSERT INTO WX_USER_CARD (OPEN_ID)
+	VALUES (#{OPEN_ID} )
+	</insert>
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="OPEN_ID != null">
+				OPEN_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="NICKNAME != null">
+				NICKNAME,
+			</if>
+			<if test="SEX != null">
+				SEX,
+			</if>
+			<if test="CITY != null">
+				CITY,
+			</if>
+			<if test="COUNTRY != null">
+				COUNTRY,
+			</if>
+			<if test="PROVINCE != null">
+				PROVINCE,
+			</if>
+			<if test="LANGUAGE != null">
+				LANGUAGE,
+			</if>
+			<if test="HEADIMGURL != null">
+				HEADIMGURL,
+			</if>
+			<if test="SUBSCRIBE_TIME != null">
+				SUBSCRIBE_TIME,
+			</if>
+			<if test="UNION_ID != null">
+				UNION_ID,
+			</if>
+			<if test="REMARK != null">
+				REMARK,
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="SUBSCRIBE != null">
+				SUBSCRIBE,
+			</if>
+			<if test="CANCEL_TIME != null">
+				CANCEL_TIME,
+			</if>
+			<if test="LAST_TIME != null">
+				LAST_TIME,
+			</if>
+			<if test="REAL_NAME != null">
+				REAL_NAME,
+			</if>
+			<if test="AGE != null">
+				AGE,
+			</if>
+			<if test="DEGREE != null">
+				DEGREE,
+			</if>
+			<if test="STORE_GROUP_ID != null">
+				STORE_GROUP_ID,
+			</if>
+			<if test="IDENTITY_CARD != null">
+				IDENTITY_CARD,
+			</if>
+			<if test="PHONE != null">
+				PHONE,
+			</if>
+			<if test="MONEY != null">
+				MONEY,
+			</if>
+			<if test="POINT != null">
+				POINT,
+			</if>
+			<if test="BIRTHDAY != null">
+				BIRTHDAY,
+			</if>
+			<if test="ALL_ORDER_COUNT != null">
+				ALL_ORDER_COUNT,
+			</if>
+			<if test="FINISH_ORDER_COUNT != null">
+				FINISH_ORDER_COUNT,
+			</if>
+			<if test="VOLUME_SALES != null">
+				VOLUME_SALES,
+			</if>
+			<if test="ATTESTATION != null">
+				ATTESTATION,
+			</if>
+			<if test="LOGIN_NAME != null">
+				LOGIN_NAME,
+			</if>
+			<if test="LOGIN_PASSWORD != null">
+				LOGIN_PASSWORD,
+			</if>
+			<if test="MEMBER_ID != null">
+				MEMBER_ID,
+			</if>
+			<if test="DELETE_MEMBER != null">
+				DELETE_MEMBER,
+			</if>
+			<if test="STORE_REMARK != null">
+				STORE_REMARK,
+			</if>
+			<if test="USER_TYPE != null">
+				USER_TYPE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="OPEN_ID != null">
+				#{OPEN_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="NICKNAME != null">
+				#{NICKNAME},
+			</if>
+			<if test="SEX != null">
+				#{SEX},
+			</if>
+			<if test="CITY != null">
+				#{CITY},
+			</if>
+			<if test="COUNTRY != null">
+				#{COUNTRY},
+			</if>
+			<if test="PROVINCE != null">
+				#{PROVINCE},
+			</if>
+			<if test="LANGUAGE != null">
+				#{LANGUAGE},
+			</if>
+			<if test="HEADIMGURL != null">
+				#{HEADIMGURL},
+			</if>
+			<if test="SUBSCRIBE_TIME != null">
+				#{SUBSCRIBE_TIME},
+			</if>
+			<if test="UNION_ID != null">
+				#{UNION_ID},
+			</if>
+			<if test="REMARK != null">
+				#{REMARK},
+			</if>
+			<if test="GROUP_ID != null">
+				#{GROUP_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="SUBSCRIBE != null">
+				#{SUBSCRIBE},
+			</if>
+			<if test="CANCEL_TIME != null">
+				#{CANCEL_TIME},
+			</if>
+			<if test="LAST_TIME != null">
+				#{LAST_TIME},
+			</if>
+			<if test="REAL_NAME != null">
+				#{REAL_NAME},
+			</if>
+			<if test="AGE != null">
+				#{AGE},
+			</if>
+			<if test="DEGREE != null">
+				#{DEGREE},
+			</if>
+			<if test="STORE_GROUP_ID != null">
+				#{STORE_GROUP_ID},
+			</if>
+			<if test="IDENTITY_CARD != null">
+				#{IDENTITY_CARD},
+			</if>
+			<if test="PHONE != null">
+				#{PHONE},
+			</if>
+			<if test="MONEY != null">
+				#{MONEY},
+			</if>
+			<if test="POINT != null">
+				#{POINT},
+			</if>
+			<if test="BIRTHDAY != null">
+				#{BIRTHDAY},
+			</if>
+			<if test="ALL_ORDER_COUNT != null">
+				#{ALL_ORDER_COUNT},
+			</if>
+			<if test="FINISH_ORDER_COUNT != null">
+				#{FINISH_ORDER_COUNT},
+			</if>
+			<if test="VOLUME_SALES != null">
+				#{VOLUME_SALES},
+			</if>
+			<if test="ATTESTATION != null">
+				#{ATTESTATION},
+			</if>
+			<if test="LOGIN_NAME != null">
+				#{LOGIN_NAME},
+			</if>
+			<if test="LOGIN_PASSWORD != null">
+				#{LOGIN_PASSWORD},
+			</if>
+			<if test="MEMBER_ID != null">
+				#{MEMBER_ID},
+			</if>
+			<if test="DELETE_MEMBER != null">
+				#{DELETE_MEMBER},
+			</if>
+			<if test="STORE_REMARK != null">
+				#{STORE_REMARK},
+			</if>
+			<if test="USER_TYPE != null">
+				#{USER_TYPE},
+			</if>
+		</trim>
+	</insert>
+	<select id="getMoneyPoint" resultType="map" parameterType="string">
+		SELECT
+		OPEN_ID,MONEY,POINT
+		FROM STORE_USER
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+	<update id="softDelete" parameterType="map">
+		UPDATE STORE_USER
+		
+			SET	DELETE_MEMBER = '0'
+		
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+	<update id="updateMoney" parameterType="map">
+		UPDATE STORE_USER
+		<set>
+			<if test="MONEY != null">
+				MONEY = #{MONEY},
+			</if>
+			<if test="POINT != null">
+				POINT = #{POINT},
+			</if>
+		</set>
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+	<update id="updateStore" parameterType="map">
+		UPDATE STORE_USER
+		<set>
+			<if test="LAST_TIME != null">
+				LAST_TIME = #{LAST_TIME},
+			</if>
+			<if test="REAL_NAME != null">
+				REAL_NAME = #{REAL_NAME},
+			</if>
+			<if test="AGE != null">
+				AGE = #{AGE},
+			</if>
+			<if test="DEGREE != null">
+				DEGREE = #{DEGREE},
+			</if>
+			<if test="IDENTITY_CARD != null">
+				IDENTITY_CARD = #{IDENTITY_CARD},
+			</if>
+			<if test="PHONE != null">
+				PHONE=#{PHONE},
+			</if>
+			<!-- <if test="MONEY != null">
+				MONEY=#{MONEY},
+			</if> -->
+			<if test="POINT != null">
+				POINT=#{POINT},
+			</if>
+			<if test="BIRTHDAY != null">
+				BIRTHDAY=#{BIRTHDAY},
+			</if>
+			<if test="ALL_ORDER_COUNT != null">
+				ALL_ORDER_COUNT=#{ALL_ORDER_COUNT},
+			</if>
+			<if test="FINISH_ORDER_COUNT != null">
+				FINISH_ORDER_COUNT=#{FINISH_ORDER_COUNT},
+			</if>
+			<if test="VOLUME_SALES != null">
+				VOLUME_SALES=#{VOLUME_SALES},
+			</if>
+			<if test="ATTESTATION != null">
+				ATTESTATION=#{ATTESTATION},
+			</if>
+			<if test="LOGIN_NAME != null">
+				LOGIN_NAME=#{LOGIN_NAME},
+			</if>
+			<if test="LOGIN_PASSWORD != null">
+				LOGIN_PASSWORD=#{LOGIN_PASSWORD},
+			</if>
+			<if test="MEMBER_ID != null">
+				MEMBER_ID=#{MEMBER_ID},
+			</if>
+			<if test="DELETE_MEMBER != null">
+				DELETE_MEMBER=#{DELETE_MEMBER},
+			</if>
+			<if test="STORE_REMARK != null">
+				STORE_REMARK=#{STORE_REMARK},
+			</if>
+			<if test="USER_TYPE != null">
+				USER_TYPE=#{USER_TYPE},
+			</if>
+		</set>
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+	<insert id="insertMoneyRecord" parameterType="map">
+	INSERT INTO WX_USER_MONEY_RECORD 
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+	<if test="RECORD_ID != null">
+		RECORD_ID,
+	</if>
+	<if test="OPEN_ID != null">
+		OPEN_ID,
+	</if>
+	<if test="REMARK != null">
+		REMARK,
+	</if>
+	<if test="TYPE != null">
+		TYPE,
+	</if>
+	<if test="MONEY != null">
+		MONEY,
+	</if>
+	<if test="POINT != null">
+		POINT,
+	</if>
+	<if test="CREATE_TIME != null">
+		CREATE_TIME,
+	</if>
+	<if test="GET_POINT != null">
+		GET_POINT,
+	</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+	<if test="RECORD_ID != null">
+		#{RECORD_ID},
+	</if>
+	<if test="OPEN_ID != null">
+		#{OPEN_ID},
+	</if>
+	<if test="REMARK != null">
+		#{REMARK},
+	</if>
+	<if test="TYPE != null">
+		#{TYPE},
+	</if>
+	<if test="MONEY != null">
+		#{MONEY},
+	</if>
+	<if test="POINT != null">
+		#{POINT},
+	</if>
+	<if test="CREATE_TIME != null">
+		#{CREATE_TIME},
+	</if>
+	<if test="GET_POINT != null">
+		#{GET_POINT},
+	</if>
+	
+	</trim>		
+	</insert>
+	<select id="moneyRecordqueryPage" resultType="map" parameterType="map">
+		SELECT
+		*
+		FROM WX_USER_MONEY_RECORD
+		WHERE OPEN_ID = #{t.OPEN_ID}
+		
+		ORDER BY CREATE_TIME DESC
+	</select>
+</mapper>

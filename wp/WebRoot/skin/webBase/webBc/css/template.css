@@ -1,0 +1,31 @@
+.g {
+    margin: 0 auto;
+    width: 100%;
+    overflow:hidden;zoom:1
+}
+.cateradio {
+    padding-top: 20px;
+    line-height: 1.5;
+}
+#grid .mix {
+    opacity: 0;
+}
+#tagContent li {
+    position: relative;
+}
+.grid li {
+    font-size: 12px;
+    z-index: 0;
+}
+.cateradio li {
+    float: left;
+    height: 383px;
+    position: relative;
+    text-align: center;
+    width: 170px;
+    margin: 0 0 20px 20px;
+}
+.tem-border{
+	border: 1px solid #e7e1e1;
+	height:auto;
+}

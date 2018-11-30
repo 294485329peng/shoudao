@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tinyWebGoodsSpace">
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		*
+		FROM STORE_GOODS
+		WHERE GZH_ID = #{t.GZH_ID}
+		AND PUBLISH = 'on'
+		<if test="t.CLASSIFY != null">
+		AND CLASSIFY1 = #{t.CLASSIFY}
+		</if>
+		<if test="t.GOODS_NAME != null" >
+      	AND GOODS_NAME LIKE concat('%', #{t.GOODS_NAME}, '%')
+    	</if>
+		ORDER BY (RANK-0)
+	</select>
+	<select id="getGoods" resultType="map" parameterType="map">
+		SELECT
+		*
+		FROM STORE_GOODS
+		WHERE GOODS_ID = #{GOODS_ID}
+	</select>
+	<select id="queryGoodsDetailList" resultType="map" parameterType="map">
+		SELECT
+		*
+		FROM STORE_GOODS_DETAIL
+		WHERE GOODS_ID = #{GOODS_ID}
+	</select>
+</mapper>

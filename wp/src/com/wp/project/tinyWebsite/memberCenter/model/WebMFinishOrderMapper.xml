@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMFinishOrderSpace">
+	<sql id="Base_Column_List">
+		ORDER_ID,OPEN_ID,MEMBER_ID,CUSTOMER_NAME,CITY,ORDER_PHONE,
+		TOTAL_PRICE,TOTAL_POINT,IS_PAY,PAY_TYPE,PAY_TIME,
+		CREATE_TIME,DEAL_TIME,DEAL_TYPE,GZH_ID,STORE_ID,
+		CONSIGNEE,ADDRESS,ADDRESS_PHONE,BUYER_LEAVE_MESSAGE,
+		MAIL_NUMBER,MAIL_COMPANY,SELLER_LEAVE_MESSAGE,TRANSPORTATION_PICE,DELIVER_TIME,
+		FINISH_TIME
+	</sql>
+	<sql id="Base_Column_Good_List">
+		GOODS_DETAIL_ID,GOODS_NAME,PIC_URL,UNIT_PRICE,MAIN_SPECIFICATION,CHILD_SPECIFICATION,
+		AMOUNT,TOTAL_PRICE,GOODS_ID,ORDER_ID
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_Good_List" />
+		FROM STORE_ORDER_GOODS
+		WHERE ORDER_ID = #{ORDER_ID}
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE OPEN_ID = #{t.OPEN_ID}
+		<if test="t.DEAL_TYPE != null">
+		AND DEAL_TYPE IN 
+		<foreach item="item" index="index" collection="t.DEAL_TYPE " 
+                         open="(" separator="," close=")">
+                        #{item}
+       </foreach>
+		</if>
+	</select>
+	<select id="queryOrder" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE ORDER_ID = #{ORDER_ID}
+	</select>
+	<!-- <select id="OrderByTypequeryPage" resultType="map"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE OPEN_ID = #{t.OPEN_ID}
+		and
+		DEAL_TYPE=#{t.DEAL_TYPE}
+	</select>
+	<select id="OrderByTypeNoqueryPage" resultType="map"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE OPEN_ID = #{t.OPEN_ID}
+		and
+		DEAL_TYPE!=#{t.DEAL_TYPE}
+	</select> -->
+</mapper>

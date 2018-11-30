@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="authorizeSpace">
+	<sql id="Base_Column_List">
+		COMPONENT_APPID,COMPONENT_APPSECRET,EXPIRES_IN,
+		COMPONENT_VERIFY_TICKET,COMPOMENT_ACCESS_TOKEN
+	</sql>
+	<select id="get" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM GZH_THIRD
+	</select>
+	<select id="getAppId" resultType="string" parameterType="string">
+		SELECT
+		GZH_APPID
+		FROM WX_GZH
+		WHERE GZH_APPID=#{GZH_APPID}
+	</select>
+	<select id="getCVT" resultType="string" parameterType="string">
+		SELECT
+		COMPONENT_VERIFY_TICKET
+		FROM GZH_THIRD
+		WHERE COMPONENT_APPID =
+		#{COMPONENT_APPID}
+	</select>
+	<select id="getCAT" resultType="map" parameterType="string">
+		SELECT
+		COMPOMENT_ACCESS_TOKEN,EXPIRES_IN
+		FROM GZH_THIRD
+		WHERE
+		COMPONENT_APPID =
+		#{COMPONENT_APPID}
+	</select>
+	<select id="getAuthCode" resultType="map" parameterType="string">
+		SELECT *
+		FROM GZH_AUTH_CODE
+		WHERE OPERATOR_ID =
+		#{OPERATOR_ID}
+	</select>
+	<update id="updateCVT" parameterType="map">
+		UPDATE GZH_THIRD
+		<set>
+			COMPONENT_VERIFY_TICKET = #{COMPONENT_VERIFY_TICKET},
+		</set>
+		WHERE COMPONENT_APPID = #{COMPONENT_APPID}
+	</update>
+	<update id="updateCAT" parameterType="map">
+		UPDATE GZH_THIRD
+		<set>
+			COMPOMENT_ACCESS_TOKEN = #{COMPOMENT_ACCESS_TOKEN},
+			EXPIRES_IN =
+			#{EXPIRES_IN}
+		</set>
+		WHERE COMPONENT_APPID = #{COMPONENT_APPID}
+	</update>
+	<update id="updateAuthCode" parameterType="map">
+		UPDATE GZH_AUTH_CODE
+		<set>
+			AUTHORIZATION_CODE = #{AUTHORIZATION_CODE},
+			CODE_EXPIRE_IN =
+			#{CODE_EXPIRE_IN}
+		</set>
+		WHERE OPERATOR_ID = #{OPERATOR_ID}
+	</update>
+	<update id="updateUnAuth" parameterType="map">
+		UPDATE WX_GZH
+		<set>
+			GZH_AUTH_STATUS = '0'
+		</set>
+		WHERE GZH_APPID = #{GZH_APPID}
+	</update>
+	<update id="updateAuthToken" parameterType="map">
+		UPDATE WX_GZH
+		<set>
+			AUTHORIZATION_ACCESS_TOKEN = #{AUTHORIZATION_ACCESS_TOKEN},
+			AUTHORIZATION_REFRESH_TOKEN = #{AUTHORIZATION_REFRESH_TOKEN},
+			TOKEN_EXPIRES_IN=#{TOKEN_EXPIRES_IN},
+			GZH_AUTH_STATUS=#{GZH_AUTH_STATUS}
+		</set>
+		WHERE GZH_APPID = #{GZH_APPID}
+	</update>
+	<update id="updateGzhInfo" parameterType="map">
+		UPDATE WX_GZH
+		<set>
+			<if test="GZH_NICK_NAME != null">
+			GZH_NICK_NAME = #{GZH_NICK_NAME},
+			</if>
+			<if test="GZH_HEADER_IMG != null">
+			GZH_HEADER_IMG
+			</if>
+			<if test="GZH_HEADER_IMG != null">
+			=#{GZH_HEADER_IMG},
+			</if>
+			<if test="GZH_TYPE != null">
+			GZH_TYPE=#{GZH_TYPE},
+			</if>
+			<if test="GZH_VERIFY_TYPE != null">
+			GZH_VERIFY_TYPE =#{GZH_VERIFY_TYPE},
+			</if>
+			<if test="GZH_WECHAT_ID != null">
+			
+			GZH_WECHAT_ID = #{GZH_WECHAT_ID},
+			</if>
+			<if test="GZH_QRCODE_URL != null">
+			GZH_QRCODE_URL=#{GZH_QRCODE_URL},
+			</if>
+			<if test="GZH_AUTH_TYPE != null">
+			GZH_AUTH_TYPE=#{GZH_AUTH_TYPE},
+			</if>
+			<if test="OPERATOR_ID != null">
+			OPERATOR_ID=#{OPERATOR_ID},
+			</if>
+			<if test="GZH_ID != null">
+			GZH_ID=#{GZH_ID}
+			</if>
+		</set>
+		WHERE GZH_APPID=#{GZH_APPID}
+	</update>
+	<insert id="insertAuthToken" parameterType="map">
+		INSERT INTO WX_GZH
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ADMIN_ID != null">
+				ADMIN_ID,
+			</if>
+			<if test="AUTHORIZATION_ACCESS_TOKEN != null">
+				AUTHORIZATION_ACCESS_TOKEN,
+			</if>
+			<if test="AUTHORIZATION_REFRESH_TOKEN != null">
+				AUTHORIZATION_REFRESH_TOKEN,
+			</if>
+			<if test="TOKEN_EXPIRES_IN != null">
+				TOKEN_EXPIRES_IN,
+			</if>
+			<if test="GZH_AUTH_STATUS != null">
+				GZH_AUTH_STATUS,
+			</if>
+			<if test="GZH_APPID != null">
+				GZH_APPID
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ADMIN_ID != null">
+				#{ADMIN_ID},
+			</if>
+			<if test="AUTHORIZATION_ACCESS_TOKEN != null">
+				#{AUTHORIZATION_ACCESS_TOKEN},
+			</if>
+			<if test="AUTHORIZATION_REFRESH_TOKEN != null">
+				#{AUTHORIZATION_REFRESH_TOKEN},
+			</if>
+			<if test="TOKEN_EXPIRES_IN != null">
+				#{TOKEN_EXPIRES_IN},
+			</if>
+			<if test="GZH_AUTH_STATUS != null">
+				#{GZH_AUTH_STATUS},
+			</if>
+			<if test="GZH_APPID != null">
+				#{GZH_APPID}
+			</if>
+		</trim>
+	</insert>
+	<insert id="insertAuthCode" parameterType="map">
+		INSERT INTO GZH_AUTH_CODE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="OPERATOR_ID != null">
+				OPERATOR_ID,
+			</if>
+			<if test="AUTHORIZATION_CODE != null">
+				AUTHORIZATION_CODE,
+			</if>
+			<if test="CODE_EXPIRE_IN != null">
+				CODE_EXPIRE_IN
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="OPERATOR_ID != null">
+				#{OPERATOR_ID},
+			</if>
+			<if test="AUTHORIZATION_CODE != null">
+				#{AUTHORIZATION_CODE},
+			</if>
+			<if test="CODE_EXPIRE_IN != null">
+				#{CODE_EXPIRE_IN}
+			</if>
+		</trim>
+	</insert>
+</mapper>

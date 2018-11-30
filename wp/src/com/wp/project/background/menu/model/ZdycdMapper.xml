@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zdycdSpace">
+
+	<insert id="insertAdminMenu" parameterType="map">
+		INSERT INTO WX_CUSTOM_ADMIN_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="MENU_ID != null">
+				MENU_ID,
+			</if>
+			<if test="MENU_NAME != null">
+				MENU_NAME,
+			</if>
+			<if test="TRIGGER_ACTION != null">
+				TRIGGER_ACTION,
+			</if>
+			<if test="RESPONSE_ACTION != null">
+				RESPONSE_ACTION,
+			</if>
+			<if test="SOURCE_URL != null">
+				SOURCE_URL,
+			</if>
+			<if test="IT_ID != null">
+				IT_ID,
+			</if>
+			<if test="LOCAL_IT_ID != null">
+				LOCAL_IT_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT,
+			</if>
+			<if test="ENABLE != null">
+				ENABLE,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="SCD_MENU != null">
+				SCD_MENU,
+			</if>
+			<if test="SCD_MENU_GROUP_ID != null">
+				SCD_MENU_GROUP_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="MENU_ID != null">
+				#{MENU_ID},
+			</if>
+			<if test="MENU_NAME != null">
+				#{MENU_NAME},
+			</if>
+			<if test="TRIGGER_ACTION != null">
+				#{TRIGGER_ACTION},
+			</if>
+			<if test="RESPONSE_ACTION != null">
+				#{RESPONSE_ACTION},
+			</if>
+			<if test="SOURCE_URL != null">
+				#{SOURCE_URL},
+			</if>
+			<if test="IT_ID != null">
+				#{IT_ID},
+			</if>
+			<if test="LOCAL_IT_ID != null">
+				#{LOCAL_IT_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="SAYTEXT != null">
+				#{SAYTEXT},
+			</if>
+			<if test="ENABLE != null">
+				#{ENABLE},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="SCD_MENU != null">
+				#{SCD_MENU},
+			</if>
+			<if test="SCD_MENU_GROUP_ID != null">
+				#{SCD_MENU_GROUP_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+		</trim>
+	</insert>
+	<insert id="insertChildMenu" parameterType="map">
+		INSERT INTO WX_CUSTOM_CHILD_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="MENU_ID != null">
+				MENU_ID,
+			</if>
+			<if test="MENU_NAME != null">
+				MENU_NAME,
+			</if>
+			<if test="TRIGGER_ACTION != null">
+				TRIGGER_ACTION,
+			</if>
+			<if test="RESPONSE_ACTION != null">
+				RESPONSE_ACTION,
+			</if>
+			<if test="SOURCE_URL != null">
+				SOURCE_URL,
+			</if>
+			<if test="IT_ID != null">
+				IT_ID,
+			</if>
+			<if test="LOCAL_IT_ID != null">
+				LOCAL_IT_ID,
+			</if>
+			<if test="PIC_URL != null">
+				PIC_URL,
+			</if>
+			<if test="PIC_ID != null">
+				PIC_ID,
+			</if>
+			<if test="SAYTEXT != null">
+				SAYTEXT,
+			</if>
+			<if test="ENABLE != null">
+				ENABLE,
+			</if>
+			<if test="RANK != null">
+				RANK,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="SCD_MENU_GROUP_ID != null">
+				SCD_MENU_GROUP_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="MENU_ID != null">
+				#{MENU_ID},
+			</if>
+			<if test="MENU_NAME != null">
+				#{MENU_NAME},
+			</if>
+			<if test="TRIGGER_ACTION != null">
+				#{TRIGGER_ACTION},
+			</if>
+			<if test="RESPONSE_ACTION != null">
+				#{RESPONSE_ACTION},
+			</if>
+			<if test="SOURCE_URL != null">
+				#{SOURCE_URL},
+			</if>
+			<if test="IT_ID != null">
+				#{IT_ID},
+			</if>
+			<if test="LOCAL_IT_ID != null">
+				#{LOCAL_IT_ID},
+			</if>
+			<if test="PIC_URL != null">
+				#{PIC_URL},
+			</if>
+			<if test="PIC_ID != null">
+				#{PIC_ID},
+			</if>
+			<if test="SAYTEXT != null">
+				#{SAYTEXT},
+			</if>
+			<if test="ENABLE != null">
+				#{ENABLE},
+			</if>
+			<if test="RANK != null">
+				#{RANK},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="SCD_MENU_GROUP_ID != null">
+				#{SCD_MENU_GROUP_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+		</trim>
+	</insert>
+	<select id="query" resultType="map" parameterType="map" >
+    SELECT
+    *
+    FROM WX_CUSTOM_ADMIN_MENU
+    WHERE GZH_ID = #{GZH_ID}
+    ORDER BY RANK ASC
+  </select>
+  <select id="getAdminMenuByMenuID" resultType="map" parameterType="map" >
+    SELECT
+    *
+    FROM WX_CUSTOM_ADMIN_MENU
+    WHERE 
+      MENU_ID = #{MENU_ID}
+  </select>
+  <select id="getChildMenuByMenuID" resultType="map" parameterType="map" >
+    SELECT
+    *
+    FROM WX_CUSTOM_CHILD_MENU
+    WHERE 
+      MENU_ID = #{MENU_ID}
+  </select>
+  <select id="getById" resultType="map" parameterType="string" >
+    SELECT 
+    T.*, C.IT_COUNT 
+	FROM 
+	(SELECT IT_ID,TITLE,PIC_URL,PIC_ID,AUTHOR,CREATE_TIME,IT_GROUP_ID FROM WX_IT WHERE  IT_ID = #{IT_ID})T 
+	INNER JOIN 
+	(SELECT IT_GROUP_ID ,COUNT(*) AS IT_COUNT FROM WX_IT  GROUP BY IT_GROUP_ID)C 
+	ON 
+	T.IT_GROUP_ID = C.IT_GROUP_ID  
+  </select>
+  <delete id="deleteAdminMenu" parameterType="string" >
+    DELETE FROM WX_CUSTOM_ADMIN_MENU
+    WHERE MENU_ID = #{MENU_ID}
+  </delete>
+  <delete id="deleteChildMenu" parameterType="string" >
+    DELETE FROM WX_CUSTOM_CHILD_MENU
+    WHERE MENU_ID = #{MENU_ID}
+  </delete>
+  <delete id="deleteMenuByGroupId" parameterType="string" >
+    DELETE FROM WX_CUSTOM_CHILD_MENU 
+    WHERE SCD_MENU_GROUP_ID = #{SCD_MENU_GROUP_ID}
+  </delete>
+  <delete id="deleteAllAdminMenu" parameterType="string" >
+    DELETE FROM WX_CUSTOM_ADMIN_MENU
+    WHERE GZH_ID = #{GZH_ID}
+  </delete>
+  <delete id="deleteAllChildMenu" parameterType="string" >
+    DELETE FROM WX_CUSTOM_CHILD_MENU
+    WHERE GZH_ID = #{GZH_ID}
+  </delete>
+  <update id="updateMenuRank" parameterType="map">
+  	UPDATE WX_CUSTOM_ADMIN_MENU  
+  	<set >
+      <if test="RANK != null" >
+        RANK = #{RANK},
+      </if>
+    </set>
+    WHERE MENU_ID = #{MENU_ID}
+  </update>
+  <select id="queryChildMenu" resultType="map" parameterType="map" >
+    SELECT
+    *
+    FROM WX_CUSTOM_CHILD_MENU
+    WHERE  SCD_MENU_GROUP_ID = #{SCD_MENU_GROUP_ID}
+    ORDER BY RANK ASC
+  </select>
+  <update id="updateAdminMenu" parameterType="map">
+  	UPDATE WX_CUSTOM_ADMIN_MENU  
+  	<set >
+      <if test="MENU_NAME != null" >
+        MENU_NAME = #{MENU_NAME},
+      </if>
+      <if test="TRIGGER_ACTION != null" >
+        TRIGGER_ACTION = #{TRIGGER_ACTION},
+      </if>
+      <if test="RESPONSE_ACTION != null" >
+        RESPONSE_ACTION = #{RESPONSE_ACTION},
+      </if>
+      <if test="SOURCE_URL != null" >
+        SOURCE_URL = #{SOURCE_URL},
+      </if>
+      <if test="IT_ID != null" >
+        IT_ID = #{IT_ID},
+      </if>
+      <if test="LOCAL_IT_ID != null" >
+        LOCAL_IT_ID = #{LOCAL_IT_ID},
+      </if>
+      <if test="PIC_URL != null" >
+        PIC_URL = #{PIC_URL},
+      </if>
+      <if test="PIC_ID != null" >
+        PIC_ID = #{PIC_ID},
+      </if>
+      <if test="SAYTEXT != null" >
+        SAYTEXT = #{SAYTEXT},
+      </if>
+      <if test="ENABLE != null" >
+        ENABLE = #{ENABLE},
+      </if>
+      <if test="RANK != null" >
+        RANK = #{RANK},
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME = #{CREATE_TIME},
+      </if>
+      <if test="SCD_MENU != null" >
+        SCD_MENU = #{SCD_MENU},
+      </if>
+    </set>
+    WHERE MENU_ID = #{MENU_ID}
+  </update>
+  <update id="updateChildMenu" parameterType="map">
+  	UPDATE WX_CUSTOM_CHILD_MENU  
+  	<set >
+      <if test="MENU_NAME != null" >
+        MENU_NAME = #{MENU_NAME},
+      </if>
+      <if test="TRIGGER_ACTION != null" >
+        TRIGGER_ACTION = #{TRIGGER_ACTION},
+      </if>
+      <if test="RESPONSE_ACTION != null" >
+        RESPONSE_ACTION = #{RESPONSE_ACTION},
+      </if>
+      <if test="SOURCE_URL != null" >
+        SOURCE_URL = #{SOURCE_URL},
+      </if>
+      <if test="IT_ID != null" >
+        IT_ID = #{IT_ID},
+      </if>
+      <if test="LOCAL_IT_ID != null" >
+        LOCAL_IT_ID = #{LOCAL_IT_ID},
+      </if>
+      <if test="PIC_URL != null" >
+        PIC_URL = #{PIC_URL},
+      </if>
+      <if test="PIC_ID != null" >
+        PIC_ID = #{PIC_ID},
+      </if>
+      <if test="SAYTEXT != null" >
+        SAYTEXT = #{SAYTEXT},
+      </if>
+      <if test="ENABLE != null" >
+        ENABLE = #{ENABLE},
+      </if>
+      <if test="RANK != null" >
+        RANK = #{RANK},
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME = #{CREATE_TIME},
+      </if>
+    </set>
+    WHERE MENU_ID = #{MENU_ID}
+  </update>
+</mapper>

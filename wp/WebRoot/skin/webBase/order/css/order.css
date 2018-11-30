@@ -1,0 +1,84 @@
+.tabs-panels {
+    clear: both;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border: 1px solid #AEC7E5;
+}
+.tabs-container .tabs-panels .order-info {
+    display: block;
+}
+.tabs-container h2, .tabs-container .info-box {
+    display: none;
+}
+
+.addr_and_note {
+    line-height: 190%;
+}
+
+.order-info dl {
+    clear: both;
+}
+.order-info dl {
+    width: 100%;
+    overflow: hidden;
+    line-height: 30px;
+}
+.addr_and_note dt {
+    width: 78px;
+    font-weight: 700;
+}
+
+.addr_and_note dt, .invoice-info dt, .misc-info dt, .misc-info dd, .contact-info dt, .contact-info dd {
+    display: inline;
+    float: left;
+}
+.order-info dt, .order-info dd {
+    min-height: 30px;
+    _height: 30px;
+}
+.info-box h3 {
+    font-size: 12px;
+}
+.order-info dl {
+    clear: both;
+}
+/* .contact-info dl {
+    margin-left: 50px;
+} */
+.contact-info dd {
+    width: 230px;
+}
+.misc-info dl {
+    border-bottom: 1px solid #f4f4f4;
+    width:100%;
+}
+.misc-info dd {
+    width: 230px;
+    text-align: left;
+}
+ dt {
+    width: 80px;
+    text-align: right;
+}
+hr {
+    color: #D1D7DC;
+    background-color: #D1D7DC;
+    border: none;
+    height: 1px;
+}
+.order-info hr {
+    margin: 10px 0 5px;
+}
+.input-text{
+	height: 25px; width: 210px;margin-bottom: 5px;padding: 0;
+	font-size: 12.5px;
+	padding-left: 3px;
+}
+.input-text-readonly{
+	background-color:#EDEDED;
+}
+.order-select{
+	margin-bottom: 6px;;padding:0px;height: 25px; width: 166px;
+}

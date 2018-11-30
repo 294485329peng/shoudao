@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="userManagementSpace">
+	<sql id="Base_Column_List">
+		OPEN_ID,GZH_ID,NICKNAME,SEX,CITY,COUNTRY,
+		PROVINCE,LANGUAGE,HEADIMGURL,SUBSCRIBE_TIME,
+		UNION_ID,REMARK,GROUP_ID,CREATE_TIME,SUBSCRIBE,
+		CANCEL_TIME
+	</sql>
+
+	<select id="getUserInfo" resultType="map" parameterType="string">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_USER
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM WX_USER
+		WHERE GZH_ID = #{t.GZH_ID}
+
+		AND SUBSCRIBE = #{t.SUBSCRIBE}
+
+		ORDER BY CREATE_TIME DESC
+	</select>
+
+	<insert id="insertUserInfo" parameterType="map">
+		INSERT INTO WX_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="OPEN_ID != null">
+				OPEN_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="NICKNAME != null">
+				NICKNAME,
+			</if>
+			<if test="SEX != null">
+				SEX,
+			</if>
+			<if test="CITY != null">
+				CITY,
+			</if>
+			<if test="COUNTRY != null">
+				COUNTRY,
+			</if>
+			<if test="PROVINCE != null">
+				PROVINCE,
+			</if>
+			<if test="LANGUAGE != null">
+				LANGUAGE,
+			</if>
+			<if test="HEADIMGURL != null">
+				HEADIMGURL,
+			</if>
+			<if test="SUBSCRIBE_TIME != null">
+				SUBSCRIBE_TIME,
+			</if>
+			<if test="UNION_ID != null">
+				UNION_ID,
+			</if>
+			<if test="REMARK != null">
+				REMARK,
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="SUBSCRIBE != null">
+				SUBSCRIBE,
+			</if>
+			<if test="CANCEL_TIME != null">
+				CANCEL_TIME,
+			</if>
+			<if test="DELETE_MEMBER != null">
+				DELETE_MEMBER,
+			</if>
+			<if test="USER_TYPE != null">
+				USER_TYPE
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="OPEN_ID != null">
+				#{OPEN_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="NICKNAME != null">
+				#{NICKNAME},
+			</if>
+			<if test="SEX != null">
+				#{SEX},
+			</if>
+			<if test="CITY != null">
+				#{CITY},
+			</if>
+			<if test="COUNTRY != null">
+				#{COUNTRY},
+			</if>
+			<if test="PROVINCE != null">
+				#{PROVINCE},
+			</if>
+			<if test="LANGUAGE != null">
+				#{LANGUAGE},
+			</if>
+			<if test="HEADIMGURL != null">
+				#{HEADIMGURL},
+			</if>
+			<if test="SUBSCRIBE_TIME != null">
+				#{SUBSCRIBE_TIME},
+			</if>
+			<if test="UNION_ID != null">
+				#{UNION_ID},
+			</if>
+			<if test="REMARK != null">
+				#{REMARK},
+			</if>
+			<if test="GROUP_ID != null">
+				#{GROUP_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="SUBSCRIBE != null">
+				#{SUBSCRIBE},
+			</if>
+			<if test="CANCEL_TIME != null">
+				#{CANCEL_TIME},
+			</if>
+			<if test="DELETE_MEMBER != null">
+				#{DELETE_MEMBER},
+			</if>
+			<if test="USER_TYPE != null">
+				#{USER_TYPE}
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteUserInfo" parameterType="string">
+		DELETE FROM WX_USER
+		WHERE
+		OPEN_ID = #{OPEN_ID}
+	</delete>
+
+	<update id="softDeleteUserInfo" parameterType="map">
+		UPDATE WX_USER
+		<set>
+			SUBSCRIBE = '0',
+			<if test="CANCEL_TIME != null">
+				CANCEL_TIME=#{CANCEL_TIME},
+			</if>
+		</set>
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+	<update id="updateUserInfo" parameterType="map">
+		UPDATE WX_USER
+		<set>
+			<if test="NICKNAME != null">
+				NICKNAME=#{NICKNAME},
+			</if>
+			<if test="SEX != null">
+				SEX=#{SEX},
+			</if>
+			<if test="CITY != null">
+				CITY=#{CITY},
+			</if>
+			<if test="COUNTRY != null">
+				COUNTRY=#{COUNTRY},
+			</if>
+			<if test="PROVINCE != null">
+				PROVINCE=#{PROVINCE},
+			</if>
+			<if test="LANGUAGE != null">
+				LANGUAGE=#{LANGUAGE},
+			</if>
+			<if test="HEADIMGURL != null">
+				HEADIMGURL=#{HEADIMGURL},
+			</if>
+			<if test="SUBSCRIBE_TIME != null">
+				SUBSCRIBE_TIME=#{SUBSCRIBE_TIME},
+			</if>
+			<if test="UNION_ID != null">
+				UNION_ID=#{UNION_ID},
+			</if>
+			<if test="REMARK != null">
+				REMARK=#{REMARK},
+			</if>
+			<if test="GROUP_ID != null">
+				GROUP_ID=#{GROUP_ID},
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME=#{CREATE_TIME},
+			</if>
+			<if test="SUBSCRIBE != null">
+				SUBSCRIBE=#{SUBSCRIBE},
+			</if>
+			<if test="CANCEL_TIME != null">
+				CANCEL_TIME=#{CANCEL_TIME},
+			</if>
+
+		</set>
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+</mapper>

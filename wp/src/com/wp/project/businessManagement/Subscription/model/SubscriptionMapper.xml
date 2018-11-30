@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="subscriptionSpace" >
+  <sql id="Base_Column_List_GzhOpera" >
+    GZH_ID,OPERATOR_ID,GZH_APPID,GZH_APPSECRET
+  </sql>
+  <sql id="Base_Column_List_WXGzh" >
+    ADMIN_ID,GZH_NAME,GZH_ID,GZH_WECHAT_ID,GZH_APPID,GZH_APPSECRET,GZH_TOKEN,ENCODINGAESKEY,OPERATOR_ID,GZH_PASSWORD,
+	GZH_ACCESS_TOKEN,CREATE_TIME
+  </sql>
+  <select id="getGzhOpera" resultType="map" parameterType="string" >
+    SELECT
+    ADMIN_ID,GZH_APPID,GZH_NAME,GZH_ID,GZH_AUTH_STATUS,GZH_AUTH_TYPE
+    FROM WX_GZH
+    WHERE OPERATOR_ID = #{OPERATOR_ID}
+  </select>
+  <select id="getWXGzh" resultType="map" parameterType="string" >
+    SELECT
+    *,st.NUMBER AS TEMPLATE
+    FROM WX_GZH wx LEFT JOIN STORE_TEMPLATE st ON wx.TEMPLATE_ID = st.TEMPLATE_ID
+    WHERE GZH_ID = #{GZH_ID}
+  </select>
+  <select id="getWXGzhByAdminId" resultType="map" parameterType="string" >
+    SELECT
+    *
+    FROM WX_GZH
+    WHERE ADMIN_ID = #{ADMIN_ID}
+  </select>
+  <select id="queryGzhOpera" resultType="map" parameterType="map" >
+    SELECT
+    <include refid="Base_Column_List_GzhOpera" />
+    FROM GZH_OPERATOR
+    WHERE 1=1
+  </select>
+  <!-- <select id="queryPage" resultType="map" parameterType="map" >
+    SELECT
+    <include refid="Base_Column_List_GzhOpera" />
+    FROM AC_ROLE
+    WHERE 1=1
+    <if test="t.ROLE_NAME != null" >
+      AND ROLE_NAME LIKE '%${t.ROLE_NAME}%'
+    </if>
+    ORDER BY CREATE_TIME DESC
+  </select> -->
+  <delete id="deleteGzhOpera" parameterType="string" >
+    DELETE FROM GZH_OPERATOR
+    WHERE OPERATOR_ID = #{OPERATOR_ID}
+  </delete>
+  <!-- <delete id="batchDelete" parameterType="map" >
+    DELETE FROM AC_ROLE
+    WHERE 1=2
+    <if test="ROLE_IDS != null" >
+     OR   ROLE_ID IN (${ROLE_IDS})
+    </if>
+  </delete> -->
+  <insert id="insertGzhOpera" parameterType="map">
+		INSERT INTO GZH_OPERATOR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="OPERATOR_ID != null">
+				OPERATOR_ID,
+			</if>
+			<if test="GZH_APPID != null">
+				GZH_APPID,
+			</if>
+			<if test="GZH_APPSECRET != null">
+				GZH_APPSECRET,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="GZH_OPERA_ID != null">
+				#{GZH_OPERA_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="OPERATOR_ID != null">
+				#{OPERATOR_ID},
+			</if>
+			<if test="GZH_APPID != null">
+				#{GZH_APPID},
+			</if>
+			<if test="GZH_APPSECRET != null">
+				#{GZH_APPSECRET},
+			</if>
+		</trim>
+	</insert>
+  <insert id="insertWXGzh" parameterType="map">
+		INSERT INTO WX_GZH
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ADMIN_ID != null">
+				ADMIN_ID,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="GZH_NAME != null">
+				GZH_NAME,
+			</if>
+			<if test="GZH_WECHAT_ID != null">
+				GZH_WECHAT_ID,
+			</if>
+			<if test="GZH_APPID != null">
+				GZH_APPID,
+			</if>
+			<if test="GZH_APPSECRET != null">
+				GZH_APPSECRET,
+			</if>
+			<if test="GZH_TOKEN != null">
+				GZH_TOKEN,
+			</if>
+			<if test="GZH_TYPE != null">
+				GZH_TYPE,
+			</if>
+			<if test="ENCODINGAESKEY != null">
+				ENCODINGAESKEY,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="GZH_ACCESS_TOKEN != null">
+				GZH_ACCESS_TOKEN,
+			</if>
+			<if test="OPERATOR_ID != null">
+				OPERATOR_ID,
+			</if>
+			<if test="GZH_APPID_SW != null">
+				GZH_APPID_SW,
+			</if>
+			<if test="GZH_PASSWORD != null">
+				GZH_PASSWORD
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ADMIN_ID != null">
+				#{ADMIN_ID},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="GZH_NAME != null">
+				#{GZH_NAME},
+			</if>
+			<if test="GZH_WECHAT_ID != null">
+				#{GZH_WECHAT_ID},
+			</if>
+			<if test="GZH_APPID != null">
+				#{GZH_APPID},
+			</if>
+			<if test="GZH_APPSECRET != null">
+				#{GZH_APPSECRET},
+			</if>
+			<if test="GZH_TOKEN != null">
+				#{GZH_TOKEN},
+			</if>
+			<if test="GZH_TYPE != null">
+				#{GZH_TYPE},
+			</if>
+			<if test="ENCODINGAESKEY != null">
+				#{ENCODINGAESKEY},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="GZH_ACCESS_TOKEN != null">
+				#{GZH_ACCESS_TOKEN},
+			</if>
+			<if test="OPERATOR_ID != null">
+				#{OPERATOR_ID},
+			</if>
+			<if test="GZH_APPID_SW != null">
+				#{GZH_APPID_SW},
+			</if>
+			<if test="GZH_PASSWORD != null">
+				#{GZH_PASSWORD}
+			</if>
+		</trim>
+	</insert>
+  
+  <update id="updateGzhOpera" parameterType="map" >
+   UPDATE GZH_OPERATOR
+    <set >
+      <if test="GZH_ID != null" >
+        GZH_ID = #{GZH_ID},
+      </if>
+      <if test="GZH_APPID != null" >
+        GZH_APPID = #{GZH_APPID},
+      </if>
+      <if test="GZH_APPSECRET != null" >
+        GZH_APPSECRET = #{GZH_APPSECRET},
+      </if>
+    </set>
+    WHERE OPERATOR_ID = #{OPERATOR_ID}
+  </update>
+  <update id="updateWXGzh" parameterType="map" >
+   UPDATE WX_GZH
+    <set >
+      <if test="GZH_ID != null" >
+        GZH_ID = #{GZH_ID},
+      </if>
+      <if test="GZH_NAME != null" >
+        GZH_NAME = #{GZH_NAME},
+      </if>
+      <if test="GZH_WECHAT_ID != null" >
+        GZH_WECHAT_ID = #{GZH_WECHAT_ID},
+      </if>
+      <if test="GZH_APPID != null" >
+        GZH_APPID = #{GZH_APPID},
+      </if>
+      <if test="GZH_TOKEN != null" >
+        GZH_TOKEN = #{GZH_TOKEN},
+      </if>
+      <if test="GZH_TYPE != null" >
+        GZH_TYPE = #{GZH_TYPE},
+      </if>
+      <if test="ENCODINGAESKEY != null" >
+        ENCODINGAESKEY = #{ENCODINGAESKEY},
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME = #{CREATE_TIME},
+      </if>
+      <if test="GZH_ACCESS_TOKEN != null" >
+        GZH_ACCESS_TOKEN = #{GZH_ACCESS_TOKEN},
+      </if>
+      <if test="OPERATOR_ID != null" >
+        OPERATOR_ID = #{OPERATOR_ID},
+      </if>
+      <if test="GZH_APPID_SW != null" >
+        GZH_APPID_SW = #{GZH_APPID_SW},
+      </if>
+      <if test="GZH_PASSWORD != null" >
+        GZH_PASSWORD = #{GZH_PASSWORD},
+      </if>
+    </set>
+    WHERE GZH_ID = #{GZH_ID}
+  </update>
+  
+
+</mapper>

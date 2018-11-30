@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderSpace">
+	<sql id="Base_Column_List">
+	ORDER_ID,OPEN_ID,MEMBER_ID,CUSTOMER_NAME,CITY,ORDER_PHONE,
+	TOTAL_PRICE,TOTAL_POINT,IS_PAY,PAY_TYPE,PAY_TIME,
+	CREATE_TIME,DEAL_TIME,DEAL_TYPE,GZH_ID,STORE_ID,
+	CONSIGNEE,ADDRESS,ADDRESS_PHONE,BUYER_LEAVE_MESSAGE,
+	MAIL_NUMBER,MAIL_COMPANY,SELLER_LEAVE_MESSAGE,TRANSPORTATION_PICE,DELIVER_TIME,
+	FINISH_TIME
+	</sql>
+	<select id="getOrder" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE ORDER_ID = #{ORDER_ID}
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE GZH_ID = #{t.GZH_ID}
+		<if test="t.ORDER_ID != null" >
+      	AND ORDER_ID LIKE concat('%', #{t.ORDER_ID}, '%')
+    	</if>
+    	<if test="t.DEAL_TYPE != null" >
+      	AND DEAL_TYPE =#{t.DEAL_TYPE}
+    	</if>
+		ORDER BY (DEAL_TYPE+0), CREATE_TIME DESC
+	</select>
+	<select id="memberqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE OPEN_ID = #{t.OPEN_ID}
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="ctimeDescqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE GZH_ID = #{t.GZH_ID}
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="ctimeAscqueryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE GZH_ID = #{t.GZH_ID}
+		ORDER BY CREATE_TIME ASC
+	</select>
+	
+	<select id="dealTypequeryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE GZH_ID = #{t.GZH_ID}
+		AND DEAL_TYPE =#{t.DEAL_TYPE}
+		ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="betweenTimepequeryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER
+		WHERE GZH_ID = #{t.GZH_ID}
+		AND CREATE_TIME BETWEEN #{t.START_TIME}
+		AND #{t.END_TIME}
+		ORDER BY (DEAL_TYPE+0), CREATE_TIME DESC
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		INSERT INTO STORE_ORDER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ORDER_ID != null">
+				ORDER_ID,
+			</if>
+			<if test="OPEN_ID != null">
+				OPEN_ID,
+			</if>
+			<if test="MEMBER_ID != null">
+				MEMBER_ID,
+			</if>
+			<if test="CUSTOMER_NAME != null">
+				CUSTOMER_NAME,
+			</if>
+			<if test="CITY != null">
+				CITY,
+			</if>
+			<if test="ORDER_PHONE != null">
+				ORDER_PHONE,
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE,
+			</if>
+			<if test="TOTAL_POINT != null">
+				TOTAL_POINT,
+			</if>
+			<if test="IS_PAY != null">
+				IS_PAY,
+			</if>
+			<if test="PAY_TYPE != null">
+				PAY_TYPE,
+			</if>
+			<if test="PAY_TIME != null">
+				PAY_TIME,
+			</if>
+			<if test="CREATE_TIME != null">
+				CREATE_TIME,
+			</if>
+			<if test="DEAL_TIME != null">
+				DEAL_TIME,
+			</if>
+			<if test="DEAL_TYPE != null">
+				DEAL_TYPE,
+			</if>
+			<if test="GZH_ID != null">
+				GZH_ID,
+			</if>
+			<if test="STORE_ID != null">
+				STORE_ID,
+			</if>
+			<if test="CONSIGNEE != null">
+				CONSIGNEE,
+			</if>
+			<if test="ADDRESS != null">
+				ADDRESS,
+			</if>
+			<if test="ADDRESS_PHONE != null">
+				ADDRESS_PHONE,
+			</if>
+			<if test="BUYER_LEAVE_MESSAGE != null">
+				BUYER_LEAVE_MESSAGE,
+			</if>
+			<if test="MAIL_NUMBER != null">
+				MAIL_NUMBER,
+			</if>
+			<if test="MAIL_COMPANY != null">
+				MAIL_COMPANY,
+			</if>
+			<if test="SELLER_LEAVE_MESSAGE != null">
+				SELLER_LEAVE_MESSAGE,
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				TRANSPORTATION_PICE,
+			</if>
+			<if test="DELIVER_TIME != null">
+				DELIVER_TIME,
+			</if>
+			<if test="FINISH_TIME != null">
+				FINISH_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ORDER_ID != null">
+				#{ORDER_ID},
+			</if>
+			<if test="OPEN_ID != null">
+				#{OPEN_ID},
+			</if>
+			<if test="MEMBER_ID != null">
+				#{MEMBER_ID},
+			</if>
+			<if test="CUSTOMER_NAME != null">
+				#{CUSTOMER_NAME},
+			</if>
+			<if test="CITY != null">
+				#{CITY},
+			</if>
+			<if test="ORDER_PHONE != null">
+				#{ORDER_PHONE},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				#{TOTAL_PRICE},
+			</if>
+			<if test="TOTAL_POINT != null">
+				#{TOTAL_POINT},
+			</if>
+			<if test="IS_PAY != null">
+				#{IS_PAY},
+			</if>
+			<if test="PAY_TYPE != null">
+				#{PAY_TYPE},
+			</if>
+			<if test="PAY_TIME != null">
+				#{PAY_TIME},
+			</if>
+			<if test="CREATE_TIME != null">
+				#{CREATE_TIME},
+			</if>
+			<if test="DEAL_TIME != null">
+				#{DEAL_TIME},
+			</if>
+			<if test="DEAL_TYPE != null">
+				#{DEAL_TYPE},
+			</if>
+			<if test="GZH_ID != null">
+				#{GZH_ID},
+			</if>
+			<if test="STORE_ID != null">
+				#{STORE_ID},
+			</if>
+			<if test="CONSIGNEE != null">
+				#{CONSIGNEE},
+			</if>
+			<if test="ADDRESS != null">
+				#{ADDRESS},
+			</if>
+			<if test="ADDRESS_PHONE != null">
+				#{ADDRESS_PHONE},
+			</if>
+			<if test="BUYER_LEAVE_MESSAGE != null">
+				#{BUYER_LEAVE_MESSAGE},
+			</if>
+			<if test="MAIL_NUMBER != null">
+				#{MAIL_NUMBER},
+			</if>
+			<if test="MAIL_COMPANY != null">
+				#{MAIL_COMPANY},
+			</if>
+			<if test="SELLER_LEAVE_MESSAGE != null">
+				#{SELLER_LEAVE_MESSAGE},
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				#{TRANSPORTATION_PICE},
+			</if>
+			<if test="DELIVER_TIME != null">
+				#{DELIVER_TIME},
+			</if>
+			<if test="FINISH_TIME != null">
+				#{FINISH_TIME},
+			</if>
+		</trim>
+	</insert>
+	<!-- <delete id="delete" parameterType="string">
+		DELETE FROM STORE_ACTIVITY
+		WHERE  ACTIVITY_ID = #{ACTIVITY_ID}
+		
+	</delete> -->
+	
+	<update id="update" parameterType="map">
+		UPDATE STORE_ORDER
+		<set>
+			<if test="CUSTOMER_NAME != null">
+				CUSTOMER_NAME = #{CUSTOMER_NAME},
+			</if>
+			<if test="CITY != null">
+				CITY = #{CITY},
+			</if>
+			<if test="ORDER_PHONE != null">
+				ORDER_PHONE = #{ORDER_PHONE},
+			</if>
+			<if test="CONSIGNEE != null">
+				CONSIGNEE = #{CONSIGNEE},
+			</if>
+			<if test="ADDRESS != null">
+				ADDRESS = #{ADDRESS},
+			</if>
+			<if test="ADDRESS_PHONE != null">
+				ADDRESS_PHONE = #{ADDRESS_PHONE},
+			</if>
+			<if test="BUYER_LEAVE_MESSAGE != null">
+				BUYER_LEAVE_MESSAGE = #{BUYER_LEAVE_MESSAGE},
+			</if>
+			<if test="TOTAL_PRICE != null">
+				TOTAL_PRICE=#{TOTAL_PRICE},
+			</if>
+			<if test="TOTAL_POINT != null">
+				TOTAL_POINT=#{TOTAL_POINT},
+			</if>
+			<if test="TRANSPORTATION_PICE != null">
+				TRANSPORTATION_PICE=#{TRANSPORTATION_PICE},
+			</if>
+			<if test="DEAL_TYPE != null">
+				DEAL_TYPE=#{DEAL_TYPE},
+			</if>
+			<if test="MAIL_NUMBER != null">
+				MAIL_NUMBER=#{MAIL_NUMBER},
+			</if>
+			<if test="MAIL_COMPANY != null">
+				MAIL_COMPANY=#{MAIL_COMPANY},
+			</if>
+			<if test="SELLER_LEAVE_MESSAGE != null">
+				SELLER_LEAVE_MESSAGE=#{SELLER_LEAVE_MESSAGE},
+			</if>
+			<if test="FINISH_TIME != null">
+				FINISH_TIME=#{FINISH_TIME},
+			</if>
+		</set>
+		WHERE ORDER_ID = #{ORDER_ID}
+	</update>
+</mapper>

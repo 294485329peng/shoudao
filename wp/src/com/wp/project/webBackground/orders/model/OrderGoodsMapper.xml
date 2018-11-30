@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderGoodsSpace">
+	<sql id="Base_Column_List">
+	GOODS_DETAIL_ID,GOODS_NAME,PIC_URL,UNIT_PRICE,MAIN_SPECIFICATION,CHILD_SPECIFICATION,
+	AMOUNT,TOTAL_PRICE,GOODS_ID,ORDER_ID
+	</sql>
+	<select id="get" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER_GOODS
+		WHERE ORDER_ID = #{GOODS_DETAIL_ID}
+	</select>
+	<select id="queryPage" resultType="map" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM STORE_ORDER_GOODS
+		WHERE ORDER_ID = #{t.ORDER_ID}
+	</select>
+	
+</mapper>

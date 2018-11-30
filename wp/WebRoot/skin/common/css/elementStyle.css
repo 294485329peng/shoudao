@@ -1,0 +1,148 @@
+/***** 按钮 *****/
+/* 灰色  基础必选*/
+.zero_btn {
+    border-radius: 3px;
+    border-color:#DADADA;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    overflow: visible;
+    padding: 0 22px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    
+}
+/* 背景绿色 */
+.zero_btn_primary {
+    background-color: #44b549;
+    background-image: linear-gradient(to bottom, #44b549 0px, #44b549 100%);
+    border-color: #44b549;
+    color: #fff;
+}
+/* 背景粉色 */
+.zero_btn_red{
+    background-color: red;
+    background-image: linear-gradient(to bottom, red 0px, red 100%);
+    border-color: red;
+    color: #fff;
+}
+/***** 下拉框 *****/
+.zero-select-base{
+	border: 1px solid;
+	border-color:#DADADA;
+    color: #888;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    width:auto;
+    padding: 3px 3px 3px 5px;
+    font-size: 14px;
+    line-height:15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    border-style: 0px;
+}
+.zero-select{
+    background: #FFF url('../images/uew_icon.png') no-repeat right center;
+    background-position: 97.5%;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+    height: 35px;
+    line-height: 25px;
+}
+.zero-select:hover{
+    background: #FFF url('../images/uew_icon_hover.png') no-repeat right center;
+    background-position: 97.5%;
+    /* appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+    height: 35px;
+    line-height: 25px; */
+}
+
+/***** input text*****/
+.zero-input-text{
+	border: 1px solid ;
+	border-color:#DADADA;
+    color: #000;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    width:auto;
+    padding: 3px 3px 3px 5px;
+    font-size: 14px;
+    line-height:15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    border-style: 0px;
+}
+/***** textarea*****/
+.zero-textarea-base {
+    border: 1px solid ;
+    border-color:#DADADA;
+    color: #000;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 3px 3px 3px 5px;
+    width: 50%;
+    font-size: 14px;
+    line-height:15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    }
+.zero-textarea{
+    padding: 5px 3px 3px 5px;
+    }
+/*排序的箭头*/
+.zero-icon-rank {
+    display: inline-block;
+    height: 12px;
+    margin-top: -3px;
+    position: relative;
+    vertical-align: middle;
+    width: 10px;
+}
+.zero-arrow {
+    border-color: transparent transparent #c6c6c6;
+    border-style: dashed dashed solid;
+    border-width: 0 5px 5px;
+    display: inline-block;
+    height: 0;
+    vertical-align: top;
+    width: 0;
+}
+.zero-arrow-up {
+    border-color: transparent transparent #c6c6c6;
+    border-style: dashed dashed solid;
+    border-width: 0 5px 5px;
+    display: inline-block;
+    height: 0;
+    vertical-align: top;
+    width: 0;
+}
+.zero-arrow-down {
+    border-bottom: 0 dashed transparent;
+    border-top: 5px solid #c6c6c6;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}

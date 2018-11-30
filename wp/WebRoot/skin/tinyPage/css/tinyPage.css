@@ -1,0 +1,23 @@
+.clearfix::after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+.pagediv {
+    margin: 0.8em auto 0;
+    text-align: center;
+}
+.pagediv a {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    color: #242424;
+    display: inline-block;
+    line-height: 33px;
+    margin: 0 3px;
+    padding: 0 15px;
+    text-decoration: none;
+}

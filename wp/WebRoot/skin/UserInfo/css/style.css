@@ -1,0 +1,78 @@
+.maintj{
+	text-align: left;
+}
+[class*="span"] {
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    margin-left: 2.5641%;
+    min-height: 30px;
+    width: 100%;
+}
+
+.dl-horizontal::before, .dl-horizontal::after {
+	margin-top: 12px;
+    content: "";
+    line-height: 0;
+}
+.dl-horizontal::after {
+    clear: both;
+}
+
+.dl-horizontal {
+}
+dl {
+    margin-bottom: 0;
+}
+
+.dl-horizontal dt {
+    clear: left;
+    float: left;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+dt {
+    font-weight: bold;
+}
+dt, dd {
+    line-height: 20px;
+}
+.box-content::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.box-content {
+    background: #fff none repeat scroll 0 0;
+    padding: 20px;
+}
+
+table.noborder {
+    border: medium none;
+}
+.table {
+    margin-bottom: 20px;
+    width: 100%;
+}
+table {
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+}
+
+.table th, .table td {
+    border-top: 1px solid #ddd;
+    line-height: 20px;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+table.noborder tr td {
+    border: 1px solid #dddddd;
+    padding: 4px 25px;
+    word-break: keep-all;
+}

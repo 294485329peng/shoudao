@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tinyMemberLoginSpace">
+	<update id="update" parameterType="map">
+		UPDATE STORE_USER
+		<set>
+			<if test="NICKNAME != null">
+				NICKNAME = #{NICKNAME},
+			</if>
+			<if test="PHONE != null">
+				PHONE = #{PHONE},
+			</if>
+			<if test="COUNTRY != null">
+				COUNTRY = #{COUNTRY},
+			</if>
+			<if test="LOGIN_PASSWORD != null">
+				LOGIN_PASSWORD = #{LOGIN_PASSWORD},
+			</if>
+		</set>
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+	<update id="updatePassWord" parameterType="map">
+		UPDATE STORE_USER
+		<set>
+			<if test="LOGIN_PASSWORD != null">
+				LOGIN_PASSWORD = #{LOGIN_PASSWORD},
+			</if>
+		</set>
+		WHERE OPEN_ID = #{OPEN_ID}
+	</update>
+	<select id="get" resultType="map" parameterType="map">
+		SELECT
+		OPEN_ID,NICKNAME,PHONE,COUNTRY,LOGIN_PASSWORD
+		FROM STORE_USER
+		WHERE OPEN_ID = #{OPEN_ID}
+	</select>
+</mapper>

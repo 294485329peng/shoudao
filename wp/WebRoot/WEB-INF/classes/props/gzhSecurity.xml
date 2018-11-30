@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security>
+<!--authentication 公众号类型  11 认证的订阅号   21 认证的服务号  -->
+<htmlElement name="authentication">
+<roleType name="11"/>
+<roleType name="21"/>
+</htmlElement>
+<!--1是已授权给本平台 -->
+<htmlElement name="authorization">
+<roleType name="1"/>
+</htmlElement>
+</security>
